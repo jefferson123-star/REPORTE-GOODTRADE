@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reporte Campaña WhatsApp</title>
+<title>Reporte Campaña WhatsApp — Goodtrade</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -48,14 +48,15 @@
 <body>
 <div class="dash">
   <div class="header">
-    <h1>Reporte campaña WhatsApp</h1>
-    <p>23 Marzo – 9 Abril 2026 &nbsp;·&nbsp; 10 asesores / tiendas</p>
+    <h1>Reporte campaña WhatsApp — Goodtrade</h1>
+    <p>15 Marzo – 9 Abril 2026 &nbsp;·&nbsp; 8 asesores / tiendas</p>
   </div>
 
   <div class="filter-row">
     <label>Semana:</label>
     <select id="semFilter" onchange="update()">
       <option value="all">Todas las semanas</option>
+      <option value="sem0">15–19 Marzo</option>
       <option value="sem1">23–29 Marzo</option>
       <option value="sem2">30 Mar – 5 Abr</option>
       <option value="sem3">6–9 Abril</option>
@@ -113,35 +114,44 @@
       </table>
     </div>
   </div>
-  <div class="footer">Reporte Goodtrade · 23 Marzo – 9 Abril 2026</div>
+  <div class="footer">Reporte Goodtrade · 15 Marzo – 9 Abril 2026</div>
 </div>
 
 <script>
 const RAW = [
+  {sem:"sem0",label:"15–19 Mar",asesor:"Goodtrade 1a Mayo",sug:50000,inv:50000,msg:97,costo:515.46},
   {sem:"sem1",label:"23–29 Mar",asesor:"Goodtrade 1a Mayo",sug:100000,inv:80928,msg:143,costo:565.93},
   {sem:"sem2",label:"30 Mar–5 Abr",asesor:"Goodtrade 1a Mayo",sug:100000,inv:71744,msg:98,costo:732.08},
   {sem:"sem3",label:"6–9 Abr",asesor:"Goodtrade 1a Mayo",sug:100000,inv:40400,msg:78,costo:517.95},
+  {sem:"sem0",label:"15–19 Mar",asesor:"Punto 80",sug:50000,inv:50000,msg:84,costo:595.24},
   {sem:"sem1",label:"23–29 Mar",asesor:"Punto 80",sug:100000,inv:100000,msg:157,costo:636.94},
   {sem:"sem2",label:"30 Mar–5 Abr",asesor:"Punto 80",sug:100000,inv:95011,msg:120,costo:791.76},
   {sem:"sem3",label:"6–9 Abr",asesor:"Punto 80",sug:100000,inv:75746,msg:82,costo:923.73},
+  {sem:"sem0",label:"15–19 Mar",asesor:"Goodtrade C. Jardín",sug:50000,inv:50000,msg:50,costo:1000},
   {sem:"sem1",label:"23–29 Mar",asesor:"Goodtrade C. Jardín",sug:100000,inv:101271,msg:136,costo:744.64},
   {sem:"sem2",label:"30 Mar–5 Abr",asesor:"Goodtrade C. Jardín",sug:100000,inv:97755,msg:108,costo:905.14},
   {sem:"sem3",label:"6–9 Abr",asesor:"Goodtrade C. Jardín",sug:100000,inv:53833,msg:73,costo:737.44},
+  {sem:"sem0",label:"15–19 Mar",asesor:"Goodtrade Sta. Lucía",sug:50000,inv:50000,msg:78,costo:641.03},
   {sem:"sem1",label:"23–29 Mar",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:100959,msg:157,costo:643.05},
   {sem:"sem2",label:"30 Mar–5 Abr",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:108389,msg:104,costo:1042.20},
   {sem:"sem3",label:"6–9 Abr",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:50699,msg:41,costo:1236.56},
+  {sem:"sem0",label:"15–19 Mar",asesor:"Sebastian",sug:50000,inv:50000,msg:89,costo:561.80},
   {sem:"sem1",label:"23–29 Mar",asesor:"Sebastian",sug:100000,inv:96987,msg:225,costo:431.05},
   {sem:"sem2",label:"30 Mar–5 Abr",asesor:"Sebastian",sug:100000,inv:84794,msg:171,costo:495.87},
   {sem:"sem3",label:"6–9 Abr",asesor:"Sebastian",sug:100000,inv:51685,msg:89,costo:580.73},
+  {sem:"sem0",label:"15–19 Mar",asesor:"Juan Camilo",sug:50000,inv:50000,msg:53,costo:943.40},
   {sem:"sem1",label:"23–29 Mar",asesor:"Juan Camilo",sug:100000,inv:100959,msg:221,costo:456.83},
   {sem:"sem2",label:"30 Mar–5 Abr",asesor:"Juan Camilo",sug:100000,inv:84794,msg:171,costo:495.87},
   {sem:"sem3",label:"6–9 Abr",asesor:"Juan Camilo",sug:100000,inv:53350,msg:95,costo:561.58},
+  {sem:"sem0",label:"15–19 Mar",asesor:"Andrea",sug:50000,inv:50000,msg:95,costo:526.32},
   {sem:"sem1",label:"23–29 Mar",asesor:"Andrea",sug:100000,inv:120000,msg:221,costo:542.99},
   {sem:"sem2",label:"30 Mar–5 Abr",asesor:"Andrea",sug:100000,inv:128330,msg:289,costo:444.05},
   {sem:"sem3",label:"6–9 Abr",asesor:"Andrea",sug:100000,inv:87382,msg:148,costo:590.42},
+  {sem:"sem0",label:"15–19 Mar",asesor:"Christian",sug:50000,inv:50000,msg:93,costo:537.63},
   {sem:"sem1",label:"23–29 Mar",asesor:"Christian",sug:100000,inv:79477,msg:153,costo:519.46},
   {sem:"sem2",label:"30 Mar–5 Abr",asesor:"Christian",sug:100000,inv:73700,msg:155,costo:475.48},
   {sem:"sem3",label:"6–9 Abr",asesor:"Christian",sug:100000,inv:40906,msg:79,costo:517.80},
+  {sem:"sem0",label:"15–19 Mar",asesor:"Kommo",sug:0,inv:208278,msg:334,costo:623.59},
   {sem:"sem1",label:"23–29 Mar",asesor:"Kommo",sug:1800000,inv:481144,msg:743,costo:647.57},
   {sem:"sem2",label:"30 Mar–5 Abr",asesor:"Kommo",sug:0,inv:752000,msg:903,costo:832.78},
   {sem:"sem3",label:"6–9 Abr",asesor:"Kommo",sug:0,inv:380000,msg:335,costo:1134.33},
@@ -211,8 +221,8 @@ function update(){
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}},y:{ticks:{callback:v=>'$'+fmt(v)}}}}
   });
 
-  const semanas=['sem1','sem2','sem3'];
-  const semLabels=['23–29 Mar','30 Mar–5 Abr','6–9 Abr'];
+  const semanas=['sem0','sem1','sem2','sem3'];
+  const semLabels=['15–19 Mar','23–29 Mar','30 Mar–5 Abr','6–9 Abr'];
   const lineVals = semanas.map(s=>data.filter(d=>d.sem===s).reduce((t,d)=>t+d.inv,0));
   if(lineC) lineC.destroy();
   lineC = new Chart(document.getElementById('lineChart'),{
