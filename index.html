@@ -12,22 +12,30 @@
   .header { margin-bottom: 1.5rem; }
   .header h1 { font-size: 22px; font-weight: 600; color: #1a1a18; }
   .header p { font-size: 13px; color: #5f5e5a; margin-top: 4px; }
+  .tabs { display: flex; gap: 4px; margin-bottom: 1.5rem; background: #fff; padding: 6px; border-radius: 10px; border: 0.5px solid #d3d1c7; flex-wrap: wrap; }
+  .tab { padding: 8px 18px; border-radius: 7px; font-size: 13px; font-weight: 500; cursor: pointer; color: #5f5e5a; border: none; background: none; }
+  .tab.active { background: #1a1a18; color: #fff; }
+  .filter-row { display: flex; gap: 12px; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: center; background: #fff; padding: 12px 16px; border-radius: 10px; border: 0.5px solid #d3d1c7; }
+  .filter-row label { font-size: 13px; color: #5f5e5a; font-weight: 500; }
+  select { font-size: 13px; padding: 7px 12px; border-radius: 8px; border: 0.5px solid #b4b2a9; background: #f5f5f3; color: #1a1a18; cursor: pointer; outline: none; }
   .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
   .kpi { background: #fff; border-radius: 10px; padding: 1.1rem 1.25rem; border: 0.5px solid #d3d1c7; }
   .kpi-label { font-size: 12px; color: #888780; margin-bottom: 6px; }
   .kpi-value { font-size: 26px; font-weight: 600; color: #1a1a18; }
   .kpi-sub { font-size: 12px; color: #888780; margin-top: 4px; }
-  .filter-row { display: flex; gap: 12px; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: center; background: #fff; padding: 12px 16px; border-radius: 10px; border: 0.5px solid #d3d1c7; }
-  .filter-row label { font-size: 13px; color: #5f5e5a; font-weight: 500; }
-  select { font-size: 13px; padding: 7px 12px; border-radius: 8px; border: 0.5px solid #b4b2a9; background: #f5f5f3; color: #1a1a18; cursor: pointer; outline: none; }
+  .kpi-delta { font-size: 12px; margin-top: 4px; font-weight: 500; }
+  .delta-up { color: #3B6D11; }
+  .delta-down { color: #A32D2D; }
   .chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 1.5rem; }
   .chart-box { background: #fff; border: 0.5px solid #d3d1c7; border-radius: 12px; padding: 1.2rem; }
   .chart-box h3 { font-size: 13px; font-weight: 500; color: #5f5e5a; margin-bottom: 10px; }
+  .chart-full { background: #fff; border: 0.5px solid #d3d1c7; border-radius: 12px; padding: 1.2rem; margin-bottom: 1.5rem; }
+  .chart-full h3 { font-size: 13px; font-weight: 500; color: #5f5e5a; margin-bottom: 10px; }
   .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 10px; font-size: 11px; color: #5f5e5a; }
   .legend span { display: flex; align-items: center; gap: 5px; }
   .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
   .section-title { font-size: 12px; font-weight: 600; color: #888780; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
-  .table-box { background: #fff; border: 0.5px solid #d3d1c7; border-radius: 12px; overflow: hidden; }
+  .table-box { background: #fff; border: 0.5px solid #d3d1c7; border-radius: 12px; overflow: hidden; margin-bottom: 1.5rem; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   th { background: #f5f5f3; padding: 10px 14px; text-align: left; font-weight: 600; font-size: 11px; color: #888780; border-bottom: 0.5px solid #d3d1c7; text-transform: uppercase; letter-spacing: 0.04em; }
   td { padding: 10px 14px; border-bottom: 0.5px solid #f1efe8; color: #1a1a18; }
@@ -37,7 +45,10 @@
   .badge-green { background: #EAF3DE; color: #3B6D11; }
   .badge-amber { background: #FAEEDA; color: #854F0B; }
   .badge-red { background: #FCEBEB; color: #A32D2D; }
+  .badge-blue { background: #E6F1FB; color: #0C447C; }
   .footer { text-align: center; font-size: 12px; color: #b4b2a9; margin-top: 2rem; }
+  .view-detail { display: none; }
+  .view-compare { display: none; }
   @media (max-width: 640px) {
     body { padding: 1rem; }
     .chart-row { grid-template-columns: 1fr; }
@@ -49,125 +60,202 @@
 <div class="dash">
   <div class="header">
     <h1>Reporte campaña WhatsApp — Goodtrade</h1>
-    <p>15 Marzo – 9 Abril 2026 &nbsp;·&nbsp; 8 asesores / tiendas</p>
+    <p id="subtitle">15 Marzo – 9 Abril 2026 &nbsp;·&nbsp; 8 asesores / tiendas</p>
   </div>
 
-  <div class="filter-row">
-    <label>Semana:</label>
-    <select id="semFilter" onchange="update()">
-      <option value="all">Todas las semanas</option>
-      <option value="sem0">15–19 Marzo</option>
-      <option value="sem1">23–29 Marzo</option>
-      <option value="sem2">30 Mar – 5 Abr</option>
-      <option value="sem3">6–9 Abril</option>
-    </select>
-    <label>Asesor:</label>
-    <select id="aseFilter" onchange="update()">
-      <option value="all">Todos</option>
-    </select>
+  <div class="tabs">
+    <button class="tab active" onclick="setView('detail')">Por semana</button>
+    <button class="tab" onclick="setView('compare')">Comparativa mensual</button>
   </div>
 
-  <div class="kpi-grid">
-    <div class="kpi"><div class="kpi-label">Inversión total</div><div class="kpi-value" id="kpi1">—</div><div class="kpi-sub">vs presupuesto sugerido</div></div>
-    <div class="kpi"><div class="kpi-label">Mensajes enviados</div><div class="kpi-value" id="kpi2">—</div><div class="kpi-sub">total WhatsApp</div></div>
-    <div class="kpi"><div class="kpi-label">Costo promedio / msg</div><div class="kpi-value" id="kpi3">—</div><div class="kpi-sub">COP por mensaje</div></div>
-    <div class="kpi"><div class="kpi-label">% ejecución budget</div><div class="kpi-value" id="kpi4">—</div><div class="kpi-sub">inversión / sugerida</div></div>
-  </div>
+  <!-- VISTA DETALLE -->
+  <div id="viewDetail">
+    <div class="filter-row">
+      <label>Mes:</label>
+      <select id="mesFilter" onchange="updateFilters()">
+        <option value="all">Todos los meses</option>
+        <option value="marzo">Marzo</option>
+        <option value="abril">Abril</option>
+      </select>
+      <label>Semana:</label>
+      <select id="semFilter" onchange="update()">
+        <option value="all">Todas</option>
+      </select>
+      <label>Asesor:</label>
+      <select id="aseFilter" onchange="update()">
+        <option value="all">Todos</option>
+      </select>
+    </div>
 
-  <div class="chart-row">
-    <div class="chart-box">
-      <h3>Inversión real vs sugerida por asesor</h3>
-      <div class="legend">
-        <span><span class="legend-dot" style="background:#378ADD"></span>Sugerida</span>
-        <span><span class="legend-dot" style="background:#1D9E75"></span>Real</span>
+    <div class="kpi-grid">
+      <div class="kpi"><div class="kpi-label">Inversión total</div><div class="kpi-value" id="kpi1">—</div><div class="kpi-sub">COP</div></div>
+      <div class="kpi"><div class="kpi-label">Mensajes enviados</div><div class="kpi-value" id="kpi2">—</div><div class="kpi-sub">total WhatsApp</div></div>
+      <div class="kpi"><div class="kpi-label">Costo promedio / msg</div><div class="kpi-value" id="kpi3">—</div><div class="kpi-sub">COP por mensaje</div></div>
+      <div class="kpi"><div class="kpi-label">% ejecución budget</div><div class="kpi-value" id="kpi4">—</div><div class="kpi-sub">inversión / sugerida</div></div>
+    </div>
+
+    <div class="chart-row">
+      <div class="chart-box">
+        <h3>Inversión real vs sugerida por asesor</h3>
+        <div class="legend">
+          <span><span class="legend-dot" style="background:#378ADD"></span>Sugerida</span>
+          <span><span class="legend-dot" style="background:#1D9E75"></span>Real</span>
+        </div>
+        <div style="position:relative;height:260px;"><canvas id="barChart"></canvas></div>
       </div>
-      <div style="position:relative;height:260px;"><canvas id="barChart"></canvas></div>
+      <div class="chart-box">
+        <h3>Mensajes por asesor</h3>
+        <div class="legend"><span><span class="legend-dot" style="background:#D4537E"></span>Mensajes WA</span></div>
+        <div style="position:relative;height:260px;"><canvas id="msgChart"></canvas></div>
+      </div>
     </div>
-    <div class="chart-box">
-      <h3>Mensajes por asesor</h3>
-      <div class="legend"><span><span class="legend-dot" style="background:#D4537E"></span>Mensajes WA</span></div>
-      <div style="position:relative;height:260px;"><canvas id="msgChart"></canvas></div>
-    </div>
-  </div>
 
-  <div class="chart-row">
-    <div class="chart-box">
-      <h3>Costo por mensaje por asesor (COP)</h3>
-      <div class="legend"><span><span class="legend-dot" style="background:#BA7517"></span>Costo / msg</span></div>
-      <div style="position:relative;height:220px;"><canvas id="costoChart"></canvas></div>
+    <div class="chart-row">
+      <div class="chart-box">
+        <h3>Costo por mensaje por asesor (COP)</h3>
+        <div class="legend"><span><span class="legend-dot" style="background:#BA7517"></span>Costo / msg</span></div>
+        <div style="position:relative;height:220px;"><canvas id="costoChart"></canvas></div>
+      </div>
+      <div class="chart-box">
+        <h3>Evolución semanal — inversión total</h3>
+        <div class="legend"><span><span class="legend-dot" style="background:#7F77DD"></span>Inversión</span></div>
+        <div style="position:relative;height:220px;"><canvas id="lineChart"></canvas></div>
+      </div>
     </div>
-    <div class="chart-box">
-      <h3>Evolución semanal — inversión total</h3>
-      <div class="legend"><span><span class="legend-dot" style="background:#7F77DD"></span>Inversión</span></div>
-      <div style="position:relative;height:220px;"><canvas id="lineChart"></canvas></div>
-    </div>
-  </div>
 
-  <div style="margin-bottom:1.5rem;">
     <div class="section-title">Detalle por asesor y semana</div>
     <div class="table-box">
       <table>
         <thead>
-          <tr><th>Asesor</th><th>Semana</th><th>Inv. real</th><th>Mensajes</th><th>Costo / msg</th><th>% ejecución</th></tr>
+          <tr><th>Asesor</th><th>Mes</th><th>Semana</th><th>Inv. real</th><th>Mensajes</th><th>Costo / msg</th><th>% ejecución</th></tr>
         </thead>
         <tbody id="tableBody"></tbody>
       </table>
     </div>
   </div>
+
+  <!-- VISTA COMPARATIVA -->
+  <div id="viewCompare" style="display:none;">
+    <div class="filter-row">
+      <label>Asesor:</label>
+      <select id="aseFilterComp" onchange="updateCompare()">
+        <option value="all">Todos</option>
+      </select>
+    </div>
+
+    <div class="kpi-grid" id="kpiCompare"></div>
+
+    <div class="chart-full">
+      <h3>Inversión total por mes</h3>
+      <div class="legend" id="legendCompInv"></div>
+      <div style="position:relative;height:280px;"><canvas id="compInvChart"></canvas></div>
+    </div>
+
+    <div class="chart-row">
+      <div class="chart-box">
+        <h3>Mensajes por mes</h3>
+        <div class="legend" id="legendCompMsg"></div>
+        <div style="position:relative;height:240px;"><canvas id="compMsgChart"></canvas></div>
+      </div>
+      <div class="chart-box">
+        <h3>Costo promedio / msg por mes</h3>
+        <div class="legend" id="legendCompCosto"></div>
+        <div style="position:relative;height:240px;"><canvas id="compCostoChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="section-title">Resumen por mes y asesor</div>
+    <div class="table-box">
+      <table>
+        <thead>
+          <tr><th>Asesor</th><th>Mes</th><th>Inv. total</th><th>Mensajes</th><th>Costo / msg</th><th>% ejec.</th></tr>
+        </thead>
+        <tbody id="tableCompare"></tbody>
+      </table>
+    </div>
+  </div>
+
   <div class="footer">Reporte Goodtrade · 15 Marzo – 9 Abril 2026</div>
 </div>
 
 <script>
 const RAW = [
-  {sem:"sem0",label:"15–19 Mar",asesor:"Goodtrade 1a Mayo",sug:50000,inv:50000,msg:97,costo:515.46},
-  {sem:"sem1",label:"23–29 Mar",asesor:"Goodtrade 1a Mayo",sug:100000,inv:80928,msg:143,costo:565.93},
-  {sem:"sem2",label:"30 Mar–5 Abr",asesor:"Goodtrade 1a Mayo",sug:100000,inv:71744,msg:98,costo:732.08},
-  {sem:"sem3",label:"6–9 Abr",asesor:"Goodtrade 1a Mayo",sug:100000,inv:40400,msg:78,costo:517.95},
-  {sem:"sem0",label:"15–19 Mar",asesor:"Punto 80",sug:50000,inv:50000,msg:84,costo:595.24},
-  {sem:"sem1",label:"23–29 Mar",asesor:"Punto 80",sug:100000,inv:100000,msg:157,costo:636.94},
-  {sem:"sem2",label:"30 Mar–5 Abr",asesor:"Punto 80",sug:100000,inv:95011,msg:120,costo:791.76},
-  {sem:"sem3",label:"6–9 Abr",asesor:"Punto 80",sug:100000,inv:75746,msg:82,costo:923.73},
-  {sem:"sem0",label:"15–19 Mar",asesor:"Goodtrade C. Jardín",sug:50000,inv:50000,msg:50,costo:1000},
-  {sem:"sem1",label:"23–29 Mar",asesor:"Goodtrade C. Jardín",sug:100000,inv:101271,msg:136,costo:744.64},
-  {sem:"sem2",label:"30 Mar–5 Abr",asesor:"Goodtrade C. Jardín",sug:100000,inv:97755,msg:108,costo:905.14},
-  {sem:"sem3",label:"6–9 Abr",asesor:"Goodtrade C. Jardín",sug:100000,inv:53833,msg:73,costo:737.44},
-  {sem:"sem0",label:"15–19 Mar",asesor:"Goodtrade Sta. Lucía",sug:50000,inv:50000,msg:78,costo:641.03},
-  {sem:"sem1",label:"23–29 Mar",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:100959,msg:157,costo:643.05},
-  {sem:"sem2",label:"30 Mar–5 Abr",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:108389,msg:104,costo:1042.20},
-  {sem:"sem3",label:"6–9 Abr",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:50699,msg:41,costo:1236.56},
-  {sem:"sem0",label:"15–19 Mar",asesor:"Sebastian",sug:50000,inv:50000,msg:89,costo:561.80},
-  {sem:"sem1",label:"23–29 Mar",asesor:"Sebastian",sug:100000,inv:96987,msg:225,costo:431.05},
-  {sem:"sem2",label:"30 Mar–5 Abr",asesor:"Sebastian",sug:100000,inv:84794,msg:171,costo:495.87},
-  {sem:"sem3",label:"6–9 Abr",asesor:"Sebastian",sug:100000,inv:51685,msg:89,costo:580.73},
-  {sem:"sem0",label:"15–19 Mar",asesor:"Juan Camilo",sug:50000,inv:50000,msg:53,costo:943.40},
-  {sem:"sem1",label:"23–29 Mar",asesor:"Juan Camilo",sug:100000,inv:100959,msg:221,costo:456.83},
-  {sem:"sem2",label:"30 Mar–5 Abr",asesor:"Juan Camilo",sug:100000,inv:84794,msg:171,costo:495.87},
-  {sem:"sem3",label:"6–9 Abr",asesor:"Juan Camilo",sug:100000,inv:53350,msg:95,costo:561.58},
-  {sem:"sem0",label:"15–19 Mar",asesor:"Andrea",sug:50000,inv:50000,msg:95,costo:526.32},
-  {sem:"sem1",label:"23–29 Mar",asesor:"Andrea",sug:100000,inv:120000,msg:221,costo:542.99},
-  {sem:"sem2",label:"30 Mar–5 Abr",asesor:"Andrea",sug:100000,inv:128330,msg:289,costo:444.05},
-  {sem:"sem3",label:"6–9 Abr",asesor:"Andrea",sug:100000,inv:87382,msg:148,costo:590.42},
-  {sem:"sem0",label:"15–19 Mar",asesor:"Christian",sug:50000,inv:50000,msg:93,costo:537.63},
-  {sem:"sem1",label:"23–29 Mar",asesor:"Christian",sug:100000,inv:79477,msg:153,costo:519.46},
-  {sem:"sem2",label:"30 Mar–5 Abr",asesor:"Christian",sug:100000,inv:73700,msg:155,costo:475.48},
-  {sem:"sem3",label:"6–9 Abr",asesor:"Christian",sug:100000,inv:40906,msg:79,costo:517.80},
-  {sem:"sem0",label:"15–19 Mar",asesor:"Kommo",sug:0,inv:208278,msg:334,costo:623.59},
-  {sem:"sem1",label:"23–29 Mar",asesor:"Kommo",sug:1800000,inv:481144,msg:743,costo:647.57},
-  {sem:"sem2",label:"30 Mar–5 Abr",asesor:"Kommo",sug:0,inv:752000,msg:903,costo:832.78},
-  {sem:"sem3",label:"6–9 Abr",asesor:"Kommo",sug:0,inv:380000,msg:335,costo:1134.33},
+  {mes:"marzo",sem:"sem0",label:"15–19 Mar",asesor:"Goodtrade 1a Mayo",sug:50000,inv:50000,msg:97,costo:515.46},
+  {mes:"marzo",sem:"sem1",label:"23–29 Mar",asesor:"Goodtrade 1a Mayo",sug:100000,inv:80928,msg:143,costo:565.93},
+  {mes:"abril",sem:"sem2",label:"30 Mar–5 Abr",asesor:"Goodtrade 1a Mayo",sug:100000,inv:71744,msg:98,costo:732.08},
+  {mes:"abril",sem:"sem3",label:"6–9 Abr",asesor:"Goodtrade 1a Mayo",sug:100000,inv:40400,msg:78,costo:517.95},
+  {mes:"marzo",sem:"sem0",label:"15–19 Mar",asesor:"Punto 80",sug:50000,inv:50000,msg:84,costo:595.24},
+  {mes:"marzo",sem:"sem1",label:"23–29 Mar",asesor:"Punto 80",sug:100000,inv:100000,msg:157,costo:636.94},
+  {mes:"abril",sem:"sem2",label:"30 Mar–5 Abr",asesor:"Punto 80",sug:100000,inv:95011,msg:120,costo:791.76},
+  {mes:"abril",sem:"sem3",label:"6–9 Abr",asesor:"Punto 80",sug:100000,inv:75746,msg:82,costo:923.73},
+  {mes:"marzo",sem:"sem0",label:"15–19 Mar",asesor:"Goodtrade C. Jardín",sug:50000,inv:50000,msg:50,costo:1000},
+  {mes:"marzo",sem:"sem1",label:"23–29 Mar",asesor:"Goodtrade C. Jardín",sug:100000,inv:101271,msg:136,costo:744.64},
+  {mes:"abril",sem:"sem2",label:"30 Mar–5 Abr",asesor:"Goodtrade C. Jardín",sug:100000,inv:97755,msg:108,costo:905.14},
+  {mes:"abril",sem:"sem3",label:"6–9 Abr",asesor:"Goodtrade C. Jardín",sug:100000,inv:53833,msg:73,costo:737.44},
+  {mes:"marzo",sem:"sem0",label:"15–19 Mar",asesor:"Goodtrade Sta. Lucía",sug:50000,inv:50000,msg:78,costo:641.03},
+  {mes:"marzo",sem:"sem1",label:"23–29 Mar",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:100959,msg:157,costo:643.05},
+  {mes:"abril",sem:"sem2",label:"30 Mar–5 Abr",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:108389,msg:104,costo:1042.20},
+  {mes:"abril",sem:"sem3",label:"6–9 Abr",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:50699,msg:41,costo:1236.56},
+  {mes:"marzo",sem:"sem0",label:"15–19 Mar",asesor:"Sebastian",sug:50000,inv:50000,msg:89,costo:561.80},
+  {mes:"marzo",sem:"sem1",label:"23–29 Mar",asesor:"Sebastian",sug:100000,inv:96987,msg:225,costo:431.05},
+  {mes:"abril",sem:"sem2",label:"30 Mar–5 Abr",asesor:"Sebastian",sug:100000,inv:84794,msg:171,costo:495.87},
+  {mes:"abril",sem:"sem3",label:"6–9 Abr",asesor:"Sebastian",sug:100000,inv:51685,msg:89,costo:580.73},
+  {mes:"marzo",sem:"sem0",label:"15–19 Mar",asesor:"Juan Camilo",sug:50000,inv:50000,msg:53,costo:943.40},
+  {mes:"marzo",sem:"sem1",label:"23–29 Mar",asesor:"Juan Camilo",sug:100000,inv:100959,msg:221,costo:456.83},
+  {mes:"abril",sem:"sem2",label:"30 Mar–5 Abr",asesor:"Juan Camilo",sug:100000,inv:84794,msg:171,costo:495.87},
+  {mes:"abril",sem:"sem3",label:"6–9 Abr",asesor:"Juan Camilo",sug:100000,inv:53350,msg:95,costo:561.58},
+  {mes:"marzo",sem:"sem0",label:"15–19 Mar",asesor:"Andrea",sug:50000,inv:50000,msg:95,costo:526.32},
+  {mes:"marzo",sem:"sem1",label:"23–29 Mar",asesor:"Andrea",sug:100000,inv:120000,msg:221,costo:542.99},
+  {mes:"abril",sem:"sem2",label:"30 Mar–5 Abr",asesor:"Andrea",sug:100000,inv:128330,msg:289,costo:444.05},
+  {mes:"abril",sem:"sem3",label:"6–9 Abr",asesor:"Andrea",sug:100000,inv:87382,msg:148,costo:590.42},
+  {mes:"marzo",sem:"sem0",label:"15–19 Mar",asesor:"Christian",sug:50000,inv:50000,msg:93,costo:537.63},
+  {mes:"marzo",sem:"sem1",label:"23–29 Mar",asesor:"Christian",sug:100000,inv:79477,msg:153,costo:519.46},
+  {mes:"abril",sem:"sem2",label:"30 Mar–5 Abr",asesor:"Christian",sug:100000,inv:73700,msg:155,costo:475.48},
+  {mes:"abril",sem:"sem3",label:"6–9 Abr",asesor:"Christian",sug:100000,inv:40906,msg:79,costo:517.80},
+  {mes:"marzo",sem:"sem0",label:"15–19 Mar",asesor:"Kommo",sug:0,inv:208278,msg:334,costo:623.59},
+  {mes:"marzo",sem:"sem1",label:"23–29 Mar",asesor:"Kommo",sug:1800000,inv:481144,msg:743,costo:647.57},
+  {mes:"abril",sem:"sem2",label:"30 Mar–5 Abr",asesor:"Kommo",sug:0,inv:752000,msg:903,costo:832.78},
+  {mes:"abril",sem:"sem3",label:"6–9 Abr",asesor:"Kommo",sug:0,inv:380000,msg:335,costo:1134.33},
 ];
 
-const asesores = [...new Set(RAW.map(d=>d.asesor))];
-const aseSelect = document.getElementById('aseFilter');
-asesores.forEach(a=>{ const o=document.createElement('option');o.value=a;o.textContent=a;aseSelect.appendChild(o); });
+const MESES = [...new Set(RAW.map(d=>d.mes))];
+const ASESORES = [...new Set(RAW.map(d=>d.asesor))];
+const COLORES_MES = {marzo:'#378ADD', abril:'#1D9E75', mayo:'#D4537E', junio:'#BA7517', julio:'#7F77DD'};
 
-let barC, msgC, costoC, lineC;
 function fmt(n){ return Math.round(n).toLocaleString('es-CO'); }
+function capFirst(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
+
+// Populate asesor selects
+[document.getElementById('aseFilter'), document.getElementById('aseFilterComp')].forEach(sel => {
+  ASESORES.forEach(a=>{ const o=document.createElement('option');o.value=a;o.textContent=a;sel.appendChild(o); });
+});
+
+let currentView = 'detail';
+let barC, msgC, costoC, lineC, compInvC, compMsgC, compCostoC;
+
+function setView(v){
+  currentView = v;
+  document.getElementById('viewDetail').style.display = v==='detail'?'block':'none';
+  document.getElementById('viewCompare').style.display = v==='compare'?'block':'none';
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active', (i===0&&v==='detail')||(i===1&&v==='compare')));
+  if(v==='detail') update();
+  else updateCompare();
+}
+
+function updateFilters(){
+  const mes = document.getElementById('mesFilter').value;
+  const sems = [...new Set(RAW.filter(d=>mes==='all'||d.mes===mes).map(d=>d.label))];
+  const semSel = document.getElementById('semFilter');
+  semSel.innerHTML = '<option value="all">Todas</option>';
+  sems.forEach(s=>{ const o=document.createElement('option');o.value=s;o.textContent=s;semSel.appendChild(o); });
+  update();
+}
 
 function filtered(){
+  const mes = document.getElementById('mesFilter').value;
   const sem = document.getElementById('semFilter').value;
   const ase = document.getElementById('aseFilter').value;
-  return RAW.filter(d=>(sem==='all'||d.sem===sem)&&(ase==='all'||d.asesor===ase));
+  return RAW.filter(d=>(mes==='all'||d.mes===mes)&&(sem==='all'||d.label===sem)&&(ase==='all'||d.asesor===ase));
 }
 
 function update(){
@@ -175,83 +263,123 @@ function update(){
   const totalInv = data.reduce((s,d)=>s+d.inv,0);
   const totalSug = data.reduce((s,d)=>s+d.sug,0);
   const totalMsg = data.reduce((s,d)=>s+d.msg,0);
-  const avgCosto = totalMsg>0 ? totalInv/totalMsg : 0;
-  const pctExec = totalSug>0 ? (totalInv/totalSug*100) : 0;
+  const avgCosto = totalMsg>0?totalInv/totalMsg:0;
+  const pctExec = totalSug>0?(totalInv/totalSug*100):0;
 
-  document.getElementById('kpi1').textContent = '$'+fmt(totalInv);
-  document.getElementById('kpi2').textContent = fmt(totalMsg);
-  document.getElementById('kpi3').textContent = '$'+fmt(avgCosto);
-  document.getElementById('kpi4').textContent = pctExec.toFixed(1)+'%';
+  document.getElementById('kpi1').textContent='$'+fmt(totalInv);
+  document.getElementById('kpi2').textContent=fmt(totalMsg);
+  document.getElementById('kpi3').textContent='$'+fmt(avgCosto);
+  document.getElementById('kpi4').textContent=pctExec.toFixed(1)+'%';
 
   const byAse={};
   data.forEach(d=>{
     if(!byAse[d.asesor]) byAse[d.asesor]={sug:0,inv:0,msg:0};
-    byAse[d.asesor].sug+=d.sug;
-    byAse[d.asesor].inv+=d.inv;
-    byAse[d.asesor].msg+=d.msg;
+    byAse[d.asesor].sug+=d.sug; byAse[d.asesor].inv+=d.inv; byAse[d.asesor].msg+=d.msg;
   });
-  const aseLabels = Object.keys(byAse);
-  const shortLabels = aseLabels.map(a=>a.length>11?a.slice(0,11)+'…':a);
-  const sugVals = aseLabels.map(a=>byAse[a].sug);
-  const invVals = aseLabels.map(a=>byAse[a].inv);
-  const msgVals = aseLabels.map(a=>byAse[a].msg);
-  const costoVals = aseLabels.map(a=>byAse[a].msg>0?Math.round(byAse[a].inv/byAse[a].msg):0);
+  const aseLabels=Object.keys(byAse);
+  const shortLabels=aseLabels.map(a=>a.length>11?a.slice(0,11)+'…':a);
 
   if(barC) barC.destroy();
-  barC = new Chart(document.getElementById('barChart'),{
-    type:'bar',
-    data:{labels:shortLabels,datasets:[
-      {label:'Sugerida',data:sugVals,backgroundColor:'#378ADD',borderRadius:3},
-      {label:'Real',data:invVals,backgroundColor:'#1D9E75',borderRadius:3}
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}},y:{ticks:{callback:v=>'$'+fmt(v)}}}}
-  });
+  barC=new Chart(document.getElementById('barChart'),{type:'bar',data:{labels:shortLabels,datasets:[
+    {label:'Sugerida',data:aseLabels.map(a=>byAse[a].sug),backgroundColor:'#378ADD',borderRadius:3},
+    {label:'Real',data:aseLabels.map(a=>byAse[a].inv),backgroundColor:'#1D9E75',borderRadius:3}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}},y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
 
   if(msgC) msgC.destroy();
-  msgC = new Chart(document.getElementById('msgChart'),{
-    type:'bar',
-    data:{labels:shortLabels,datasets:[{label:'Mensajes',data:msgVals,backgroundColor:'#D4537E',borderRadius:3}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}}}}
-  });
+  msgC=new Chart(document.getElementById('msgChart'),{type:'bar',data:{labels:shortLabels,datasets:[
+    {label:'Mensajes',data:aseLabels.map(a=>byAse[a].msg),backgroundColor:'#D4537E',borderRadius:3}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}}}}});
 
   if(costoC) costoC.destroy();
-  costoC = new Chart(document.getElementById('costoChart'),{
-    type:'bar',
-    data:{labels:shortLabels,datasets:[{label:'Costo/msg',data:costoVals,backgroundColor:'#BA7517',borderRadius:3}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}},y:{ticks:{callback:v=>'$'+fmt(v)}}}}
-  });
+  costoC=new Chart(document.getElementById('costoChart'),{type:'bar',data:{labels:shortLabels,datasets:[
+    {label:'Costo/msg',data:aseLabels.map(a=>byAse[a].msg>0?Math.round(byAse[a].inv/byAse[a].msg):0),backgroundColor:'#BA7517',borderRadius:3}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}},y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
 
-  const semanas=['sem0','sem1','sem2','sem3'];
-  const semLabels=['15–19 Mar','23–29 Mar','30 Mar–5 Abr','6–9 Abr'];
-  const lineVals = semanas.map(s=>data.filter(d=>d.sem===s).reduce((t,d)=>t+d.inv,0));
+  const sems=[...new Set(data.map(d=>d.label))];
+  const lineVals=sems.map(s=>data.filter(d=>d.label===s).reduce((t,d)=>t+d.inv,0));
   if(lineC) lineC.destroy();
-  lineC = new Chart(document.getElementById('lineChart'),{
-    type:'line',
-    data:{labels:semLabels,datasets:[{label:'Inversión',data:lineVals,borderColor:'#7F77DD',backgroundColor:'rgba(127,119,221,0.1)',pointBackgroundColor:'#7F77DD',tension:0.3,fill:true}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+fmt(v)}}}}
-  });
+  lineC=new Chart(document.getElementById('lineChart'),{type:'line',data:{labels:sems,datasets:[
+    {label:'Inversión',data:lineVals,borderColor:'#7F77DD',backgroundColor:'rgba(127,119,221,0.1)',pointBackgroundColor:'#7F77DD',tension:0.3,fill:true}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
 
-  const tbody = document.getElementById('tableBody');
+  const tbody=document.getElementById('tableBody');
   tbody.innerHTML='';
   data.forEach(d=>{
-    const pct = d.sug>0 ? d.inv/d.sug*100 : null;
-    const badge = pct===null
-      ? '<span class="badge badge-amber">Sin ref.</span>'
-      : pct>=100 ? '<span class="badge badge-green">'+pct.toFixed(0)+'%</span>'
-      : pct>=75 ? '<span class="badge badge-amber">'+pct.toFixed(0)+'%</span>'
-      : '<span class="badge badge-red">'+pct.toFixed(0)+'%</span>';
-    tbody.innerHTML+=`<tr>
-      <td><strong>${d.asesor}</strong></td>
-      <td style="color:#888780">${d.label}</td>
-      <td>$${fmt(d.inv)}</td>
-      <td>${fmt(d.msg)}</td>
-      <td>$${fmt(d.costo)}</td>
-      <td>${badge}</td>
-    </tr>`;
+    const pct=d.sug>0?d.inv/d.sug*100:null;
+    const badge=pct===null?'<span class="badge badge-amber">Sin ref.</span>':pct>=100?'<span class="badge badge-green">'+pct.toFixed(0)+'%</span>':pct>=75?'<span class="badge badge-amber">'+pct.toFixed(0)+'%</span>':'<span class="badge badge-red">'+pct.toFixed(0)+'%</span>';
+    tbody.innerHTML+=`<tr><td><strong>${d.asesor}</strong></td><td><span class="badge badge-blue">${capFirst(d.mes)}</span></td><td style="color:#888780">${d.label}</td><td>$${fmt(d.inv)}</td><td>${fmt(d.msg)}</td><td>$${fmt(d.costo)}</td><td>${badge}</td></tr>`;
   });
 }
 
-update();
+function updateCompare(){
+  const ase = document.getElementById('aseFilterComp').value;
+  const data = RAW.filter(d=>ase==='all'||d.asesor===ase);
+
+  const byMes={};
+  MESES.forEach(m=>{
+    const md=data.filter(d=>d.mes===m);
+    byMes[m]={inv:md.reduce((s,d)=>s+d.inv,0),msg:md.reduce((s,d)=>s+d.msg,0),sug:md.reduce((s,d)=>s+d.sug,0)};
+    byMes[m].costo=byMes[m].msg>0?byMes[m].inv/byMes[m].msg:0;
+  });
+
+  // KPIs comparativos
+  const kpiEl=document.getElementById('kpiCompare');
+  kpiEl.innerHTML='';
+  MESES.forEach((m,i)=>{
+    const prev=i>0?byMes[MESES[i-1]]:null;
+    const deltaInv=prev&&prev.inv>0?((byMes[m].inv-prev.inv)/prev.inv*100):null;
+    const deltaClass=deltaInv===null?'':deltaInv>=0?'delta-up':'delta-down';
+    const deltaSign=deltaInv===null?'':deltaInv>=0?'▲':'▼';
+    kpiEl.innerHTML+=`<div class="kpi">
+      <div class="kpi-label">Inversión ${capFirst(m)}</div>
+      <div class="kpi-value">$${fmt(byMes[m].inv)}</div>
+      ${deltaInv!==null?`<div class="kpi-delta ${deltaClass}">${deltaSign} ${Math.abs(deltaInv).toFixed(1)}% vs ${capFirst(MESES[i-1])}</div>`:'<div class="kpi-sub">Primer mes</div>'}
+    </div>`;
+  });
+
+  const mesLabels=MESES.map(m=>capFirst(m));
+  const colors=MESES.map(m=>COLORES_MES[m]||'#888780');
+
+  if(compInvC) compInvC.destroy();
+  compInvC=new Chart(document.getElementById('compInvChart'),{type:'bar',data:{labels:mesLabels,datasets:[
+    {label:'Inversión',data:MESES.map(m=>byMes[m].inv),backgroundColor:colors,borderRadius:4}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
+
+  if(compMsgC) compMsgC.destroy();
+  compMsgC=new Chart(document.getElementById('compMsgChart'),{type:'bar',data:{labels:mesLabels,datasets:[
+    {label:'Mensajes',data:MESES.map(m=>byMes[m].msg),backgroundColor:colors,borderRadius:4}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
+
+  if(compCostoC) compCostoC.destroy();
+  compCostoC=new Chart(document.getElementById('compCostoChart'),{type:'line',data:{labels:mesLabels,datasets:[
+    {label:'Costo/msg',data:MESES.map(m=>Math.round(byMes[m].costo)),borderColor:'#BA7517',backgroundColor:'rgba(186,117,23,0.1)',pointBackgroundColor:colors,tension:0.3,fill:true}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
+
+  // Leyenda
+  ['legendCompInv','legendCompMsg','legendCompCosto'].forEach(id=>{
+    document.getElementById(id).innerHTML=MESES.map(m=>`<span><span class="legend-dot" style="background:${COLORES_MES[m]||'#888'}"></span>${capFirst(m)}</span>`).join('');
+  });
+
+  // Tabla comparativa por asesor y mes
+  const tbody=document.getElementById('tableCompare');
+  tbody.innerHTML='';
+  const aseFilt=ase==='all'?ASESORES:[ase];
+  aseFilt.forEach(a=>{
+    MESES.forEach((m,i)=>{
+      const md=RAW.filter(d=>d.asesor===a&&d.mes===m);
+      if(!md.length) return;
+      const inv=md.reduce((s,d)=>s+d.inv,0);
+      const msg=md.reduce((s,d)=>s+d.msg,0);
+      const sug=md.reduce((s,d)=>s+d.sug,0);
+      const costo=msg>0?inv/msg:0;
+      const pct=sug>0?inv/sug*100:null;
+      const badge=pct===null?'<span class="badge badge-amber">Sin ref.</span>':pct>=100?'<span class="badge badge-green">'+pct.toFixed(0)+'%</span>':pct>=75?'<span class="badge badge-amber">'+pct.toFixed(0)+'%</span>':'<span class="badge badge-red">'+pct.toFixed(0)+'%</span>';
+      tbody.innerHTML+=`<tr><td><strong>${a}</strong></td><td><span class="badge badge-blue">${capFirst(m)}</span></td><td>$${fmt(inv)}</td><td>${fmt(msg)}</td><td>$${fmt(costo)}</td><td>${badge}</td></tr>`;
+    });
+  });
+}
+
+updateFilters();
 </script>
 </body>
 </html>
