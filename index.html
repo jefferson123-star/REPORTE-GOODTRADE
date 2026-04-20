@@ -92,7 +92,7 @@
       <div class="chart-box">
         <h3>Inversión real vs sugerida por asesor</h3>
         <div class="legend">
-          <span><span class="legend-dot" style="background:#378ADD"></span>Sugerida</span>
+          <span><span class="legend-dot" style="background:#378ADD"></span>Inv. por mensajes WA</span>
           <span><span class="legend-dot" style="background:#1D9E75"></span>Real</span>
         </div>
         <div style="position:relative;height:260px;"><canvas id="barChart"></canvas></div>
@@ -278,13 +278,13 @@ function update(){
   document.getElementById('kpi4').textContent=pctExec.toFixed(1)+'%';
 
   const byAse={};
-  data.forEach(d=>{if(!byAse[d.asesor])byAse[d.asesor]={sug:0,inv:0,msg:0};byAse[d.asesor].sug+=d.sug;byAse[d.asesor].inv+=d.inv;byAse[d.asesor].msg+=d.msg;});
+  data.forEach(d=>{if(!byAse[d.asesor])byAse[d.asesor]={sug:0,inv:0,invWA:0,msg:0};byAse[d.asesor].sug+=d.sug;byAse[d.asesor].inv+=d.inv;byAse[d.asesor].invWA+=(d.invWA||0);byAse[d.asesor].msg+=d.msg;});
   const aseLabels=Object.keys(byAse);
   const shortL=aseLabels.map(a=>a.length>11?a.slice(0,11)+'…':a);
 
   if(barC)barC.destroy();
   barC=new Chart(document.getElementById('barChart'),{type:'bar',data:{labels:shortL,datasets:[
-    {label:'Sugerida',data:aseLabels.map(a=>byAse[a].sug),backgroundColor:'#378ADD',borderRadius:3},
+    {label:'Inv. por mensajes WA',data:aseLabels.map(a=>byAse[a].invWA),backgroundColor:'#378ADD',borderRadius:3},
     {label:'Real',data:aseLabels.map(a=>byAse[a].inv),backgroundColor:'#1D9E75',borderRadius:3}
   ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}},y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
 
