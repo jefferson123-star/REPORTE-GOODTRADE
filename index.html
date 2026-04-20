@@ -82,10 +82,10 @@
     </div>
     <div class="kpi-grid">
       <div class="kpi"><div class="kpi-label">Inversión total</div><div class="kpi-value" id="s1">—</div><div class="kpi-sub">COP</div></div>
-      <div class="kpi"><div class="kpi-label">Mensajes enviados</div><div class="kpi-value" id="s2">—</div><div class="kpi-sub">total WhatsApp</div></div>
+      <div class="kpi"><div class="kpi-label">Mensajes recibidos</div><div class="kpi-value" id="s2">—</div><div class="kpi-sub">total WA recibidos</div></div>
       <div class="kpi"><div class="kpi-label">Inv. por mensajes WA</div><div class="kpi-value" id="s5">—</div><div class="kpi-sub">COP invertido en WA</div></div>
       <div class="kpi"><div class="kpi-label">Costo promedio / msg</div><div class="kpi-value" id="s3">—</div><div class="kpi-sub">COP por mensaje</div></div>
-      <div class="kpi"><div class="kpi-label">% ejecución budget</div><div class="kpi-value" id="s4">—</div><div class="kpi-sub">inversión / sugerida</div></div>
+      <div class="kpi"><div class="kpi-label">% inv. en WA</div><div class="kpi-value" id="s4">—</div><div class="kpi-sub">inv. WA / inv. total</div></div>
     </div>
     <div class="chart-row">
       <div class="chart-box">
@@ -163,7 +163,7 @@
       <select id="cs_ase" onchange="updateCompSem()"><option value="all">Todos</option></select>
     </div>
     <div class="chart-full">
-      <h3>Inversión real por semana seleccionada</h3>
+      <h3>Inv. en mensajes WA por semana</h3>
       <div style="position:relative;height:300px;"><canvas id="cs_inv"></canvas></div>
     </div>
     <div class="chart-row">
@@ -195,7 +195,7 @@
     </div>
     <div class="kpi-grid" id="cm_kpis"></div>
     <div class="chart-full">
-      <h3>Inversión total por mes</h3>
+      <h3>Inv. en mensajes WA por mes</h3>
       <div style="position:relative;height:280px;"><canvas id="cm_inv"></canvas></div>
     </div>
     <div class="chart-row">
@@ -372,7 +372,7 @@ function updateSemana(){
   document.getElementById('s2').textContent=fmt(tm);
   document.getElementById('s5').textContent='$'+fmt(tw);
   document.getElementById('s3').textContent='$'+fmt(tm>0?ti/tm:0);
-  document.getElementById('s4').textContent=(ts>0?ti/ts*100:0).toFixed(1)+'%';
+  document.getElementById('s4').textContent=(ti>0?tw/ti*100:0).toFixed(1)+'%';
 
   const byA={};
   data.forEach(d=>{if(!byA[d.asesor])byA[d.asesor]={inv:0,wa:0,msg:0};byA[d.asesor].inv+=d.inv;byA[d.asesor].wa+=d.invWA;byA[d.asesor].msg+=d.msg;});
@@ -442,7 +442,7 @@ function updateCompSem(){
   const bySem={};
   sems.forEach(s=>{const sd=data.filter(d=>d.label===s);bySem[s]={inv:sd.reduce((t,d)=>t+d.inv,0),wa:sd.reduce((t,d)=>t+d.invWA,0),msg:sd.reduce((t,d)=>t+d.msg,0),mes:sd[0]?sd[0].mes:''};bySem[s].costo=bySem[s].msg>0?bySem[s].inv/bySem[s].msg:0;});
 
-  mkChart('cs_inv',{type:'bar',data:{labels:sems,datasets:[{label:'Inv',data:sems.map(s=>bySem[s].inv),backgroundColor:colors,borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}},y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
+  mkChart('cs_inv',{type:'bar',data:{labels:sems,datasets:[{label:'Inv',data:sems.map(s=>bySem[s].wa),backgroundColor:colors,borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}},y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
 
   mkChart('cs_msg',{type:'bar',data:{labels:sems,datasets:[{label:'Msgs',data:sems.map(s=>bySem[s].msg),backgroundColor:'#D4537E',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}}}}});
 
@@ -465,13 +465,13 @@ function updateCompMes(){
   const kpiEl=document.getElementById('cm_kpis');kpiEl.innerHTML='';
   meses.forEach((m,i)=>{
     const prev=i>0?byMes[meses[i-1]]:null;
-    const delta=prev&&prev.inv>0?((byMes[m].inv-prev.inv)/prev.inv*100):null;
+    const delta=prev&&prev.wa>0?((byMes[m].wa-prev.wa)/prev.wa*100):null;
     const dc=delta===null?'':delta>=0?'delta-up':'delta-down';
     const ds=delta===null?'':delta>=0?'▲':'▼';
-    kpiEl.innerHTML+=`<div class="kpi"><div class="kpi-label">Inversión ${cap(m)}</div><div class="kpi-value">$${fmt(byMes[m].inv)}</div>${delta!==null?`<div class="kpi-delta ${dc}">${ds} ${Math.abs(delta).toFixed(1)}% vs ${cap(meses[i-1])}</div>`:'<div class="kpi-sub">Primer mes</div>'}</div>`;
+    kpiEl.innerHTML+=`<div class="kpi"><div class="kpi-label">Inv. WA ${cap(m)}</div><div class="kpi-value">$${fmt(byMes[m].wa)}</div>${delta!==null?`<div class="kpi-delta ${dc}">${ds} ${Math.abs(delta).toFixed(1)}% vs ${cap(meses[i-1])}</div>`:'<div class="kpi-sub">Primer mes</div>'}</div>`;
   });
 
-  mkChart('cm_inv',{type:'bar',data:{labels:meses.map(m=>cap(m)),datasets:[{label:'Inv',data:meses.map(m=>byMes[m].inv),backgroundColor:colors,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
+  mkChart('cm_inv',{type:'bar',data:{labels:meses.map(m=>cap(m)),datasets:[{label:'Inv',data:meses.map(m=>byMes[m].wa),backgroundColor:colors,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
   mkChart('cm_msg',{type:'bar',data:{labels:meses.map(m=>cap(m)),datasets:[{label:'Msgs',data:meses.map(m=>byMes[m].msg),backgroundColor:colors,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
   mkChart('cm_costo',{type:'line',data:{labels:meses.map(m=>cap(m)),datasets:[{label:'Costo',data:meses.map(m=>Math.round(byMes[m].costo)),borderColor:'#BA7517',backgroundColor:'rgba(186,117,23,0.1)',pointBackgroundColor:colors,tension:0.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
 
