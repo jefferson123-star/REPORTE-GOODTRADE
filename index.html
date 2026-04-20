@@ -47,8 +47,6 @@
   .badge-red { background: #FCEBEB; color: #A32D2D; }
   .badge-blue { background: #E6F1FB; color: #0C447C; }
   .footer { text-align: center; font-size: 12px; color: #b4b2a9; margin-top: 2rem; }
-  .view-detail { display: none; }
-  .view-compare { display: none; }
   @media (max-width: 640px) {
     body { padding: 1rem; }
     .chart-row { grid-template-columns: 1fr; }
@@ -60,7 +58,7 @@
 <div class="dash">
   <div class="header">
     <h1>Reporte campaña WhatsApp — Goodtrade</h1>
-    <p id="subtitle">15 Marzo – 9 Abril 2026 &nbsp;·&nbsp; 8 asesores / tiendas</p>
+    <p>2 Marzo – 19 Abril 2026 &nbsp;·&nbsp; 8 asesores / tiendas</p>
   </div>
 
   <div class="tabs">
@@ -175,96 +173,119 @@
     </div>
   </div>
 
-  <div class="footer">Reporte Goodtrade · 15 Marzo – 9 Abril 2026</div>
+  <div class="footer">Reporte Goodtrade · 2 Marzo – 19 Abril 2026</div>
 </div>
 
 <script>
 const RAW = [
-  {mes:"marzo",sem:"sem0",label:"15–19 Mar",asesor:"Goodtrade 1a Mayo",sug:50000,inv:50000,msg:97,costo:515.46},
-  {mes:"marzo",sem:"sem1",label:"23–29 Mar",asesor:"Goodtrade 1a Mayo",sug:100000,inv:80928,msg:143,costo:565.93},
-  {mes:"abril",sem:"sem2",label:"30 Mar–5 Abr",asesor:"Goodtrade 1a Mayo",sug:100000,inv:71744,msg:98,costo:732.08},
-  {mes:"abril",sem:"sem3",label:"6–9 Abr",asesor:"Goodtrade 1a Mayo",sug:100000,inv:40400,msg:78,costo:517.95},
-  {mes:"marzo",sem:"sem0",label:"15–19 Mar",asesor:"Punto 80",sug:50000,inv:50000,msg:84,costo:595.24},
-  {mes:"marzo",sem:"sem1",label:"23–29 Mar",asesor:"Punto 80",sug:100000,inv:100000,msg:157,costo:636.94},
-  {mes:"abril",sem:"sem2",label:"30 Mar–5 Abr",asesor:"Punto 80",sug:100000,inv:95011,msg:120,costo:791.76},
-  {mes:"abril",sem:"sem3",label:"6–9 Abr",asesor:"Punto 80",sug:100000,inv:75746,msg:82,costo:923.73},
-  {mes:"marzo",sem:"sem0",label:"15–19 Mar",asesor:"Goodtrade C. Jardín",sug:50000,inv:50000,msg:50,costo:1000},
-  {mes:"marzo",sem:"sem1",label:"23–29 Mar",asesor:"Goodtrade C. Jardín",sug:100000,inv:101271,msg:136,costo:744.64},
-  {mes:"abril",sem:"sem2",label:"30 Mar–5 Abr",asesor:"Goodtrade C. Jardín",sug:100000,inv:97755,msg:108,costo:905.14},
-  {mes:"abril",sem:"sem3",label:"6–9 Abr",asesor:"Goodtrade C. Jardín",sug:100000,inv:53833,msg:73,costo:737.44},
-  {mes:"marzo",sem:"sem0",label:"15–19 Mar",asesor:"Goodtrade Sta. Lucía",sug:50000,inv:50000,msg:78,costo:641.03},
-  {mes:"marzo",sem:"sem1",label:"23–29 Mar",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:100959,msg:157,costo:643.05},
-  {mes:"abril",sem:"sem2",label:"30 Mar–5 Abr",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:108389,msg:104,costo:1042.20},
-  {mes:"abril",sem:"sem3",label:"6–9 Abr",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:50699,msg:41,costo:1236.56},
-  {mes:"marzo",sem:"sem0",label:"15–19 Mar",asesor:"Sebastian",sug:50000,inv:50000,msg:89,costo:561.80},
-  {mes:"marzo",sem:"sem1",label:"23–29 Mar",asesor:"Sebastian",sug:100000,inv:96987,msg:225,costo:431.05},
-  {mes:"abril",sem:"sem2",label:"30 Mar–5 Abr",asesor:"Sebastian",sug:100000,inv:84794,msg:171,costo:495.87},
-  {mes:"abril",sem:"sem3",label:"6–9 Abr",asesor:"Sebastian",sug:100000,inv:51685,msg:89,costo:580.73},
-  {mes:"marzo",sem:"sem0",label:"15–19 Mar",asesor:"Juan Camilo",sug:50000,inv:50000,msg:53,costo:943.40},
-  {mes:"marzo",sem:"sem1",label:"23–29 Mar",asesor:"Juan Camilo",sug:100000,inv:100959,msg:221,costo:456.83},
-  {mes:"abril",sem:"sem2",label:"30 Mar–5 Abr",asesor:"Juan Camilo",sug:100000,inv:84794,msg:171,costo:495.87},
-  {mes:"abril",sem:"sem3",label:"6–9 Abr",asesor:"Juan Camilo",sug:100000,inv:53350,msg:95,costo:561.58},
-  {mes:"marzo",sem:"sem0",label:"15–19 Mar",asesor:"Andrea",sug:50000,inv:50000,msg:95,costo:526.32},
-  {mes:"marzo",sem:"sem1",label:"23–29 Mar",asesor:"Andrea",sug:100000,inv:120000,msg:221,costo:542.99},
-  {mes:"abril",sem:"sem2",label:"30 Mar–5 Abr",asesor:"Andrea",sug:100000,inv:128330,msg:289,costo:444.05},
-  {mes:"abril",sem:"sem3",label:"6–9 Abr",asesor:"Andrea",sug:100000,inv:87382,msg:148,costo:590.42},
-  {mes:"marzo",sem:"sem0",label:"15–19 Mar",asesor:"Christian",sug:50000,inv:50000,msg:93,costo:537.63},
-  {mes:"marzo",sem:"sem1",label:"23–29 Mar",asesor:"Christian",sug:100000,inv:79477,msg:153,costo:519.46},
-  {mes:"abril",sem:"sem2",label:"30 Mar–5 Abr",asesor:"Christian",sug:100000,inv:73700,msg:155,costo:475.48},
-  {mes:"abril",sem:"sem3",label:"6–9 Abr",asesor:"Christian",sug:100000,inv:40906,msg:79,costo:517.80},
-  {mes:"marzo",sem:"sem0",label:"15–19 Mar",asesor:"Kommo",sug:0,inv:208278,msg:334,costo:623.59},
-  {mes:"marzo",sem:"sem1",label:"23–29 Mar",asesor:"Kommo",sug:1800000,inv:481144,msg:743,costo:647.57},
-  {mes:"abril",sem:"sem2",label:"30 Mar–5 Abr",asesor:"Kommo",sug:0,inv:752000,msg:903,costo:832.78},
-  {mes:"abril",sem:"sem3",label:"6–9 Abr",asesor:"Kommo",sug:0,inv:380000,msg:335,costo:1134.33},
+  {mes:"marzo",label:"2–8 Mar",asesor:"Goodtrade 1a Mayo",sug:50000,inv:50000,msg:91,costo:549.45},
+  {mes:"marzo",label:"9–15 Mar",asesor:"Goodtrade 1a Mayo",sug:50000,inv:50000,msg:87,costo:574.71},
+  {mes:"marzo",label:"16–22 Mar",asesor:"Goodtrade 1a Mayo",sug:50000,inv:50000,msg:97,costo:515.46},
+  {mes:"marzo",label:"23–29 Mar",asesor:"Goodtrade 1a Mayo",sug:100000,inv:100000,msg:143,costo:565.93},
+  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Goodtrade 1a Mayo",sug:100000,inv:100000,msg:98,costo:732.08},
+  {mes:"abril",label:"6–12 Abr",asesor:"Goodtrade 1a Mayo",sug:100000,inv:100000,msg:123,costo:515.93},
+  {mes:"abril",label:"13–19 Abr",asesor:"Goodtrade 1a Mayo",sug:100000,inv:100000,msg:125,costo:575.28},
+  {mes:"marzo",label:"2–8 Mar",asesor:"Punto 80",sug:50000,inv:50000,msg:57,costo:823.42},
+  {mes:"marzo",label:"9–15 Mar",asesor:"Punto 80",sug:50000,inv:50000,msg:86,costo:581.34},
+  {mes:"marzo",label:"16–22 Mar",asesor:"Punto 80",sug:50000,inv:50000,msg:85,costo:588.24},
+  {mes:"marzo",label:"23–29 Mar",asesor:"Punto 80",sug:100000,inv:100000,msg:157,costo:636.94},
+  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Punto 80",sug:100000,inv:100000,msg:120,costo:833.33},
+  {mes:"abril",label:"6–12 Abr",asesor:"Punto 80",sug:100000,inv:100000,msg:121,costo:826.36},
+  {mes:"abril",label:"13–19 Abr",asesor:"Punto 80",sug:100000,inv:100000,msg:151,costo:662.25},
+  {mes:"marzo",label:"2–8 Mar",asesor:"Goodtrade C. Jardín",sug:50000,inv:50000,msg:54,costo:924.07},
+  {mes:"marzo",label:"9–15 Mar",asesor:"Goodtrade C. Jardín",sug:50000,inv:50000,msg:74,costo:675.59},
+  {mes:"marzo",label:"16–22 Mar",asesor:"Goodtrade C. Jardín",sug:50000,inv:50000,msg:50,costo:1000},
+  {mes:"marzo",label:"23–29 Mar",asesor:"Goodtrade C. Jardín",sug:100000,inv:100000,msg:136,costo:744.64},
+  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Goodtrade C. Jardín",sug:100000,inv:100000,msg:108,costo:905.14},
+  {mes:"abril",label:"6–12 Abr",asesor:"Goodtrade C. Jardín",sug:100000,inv:100000,msg:121,costo:696.61},
+  {mes:"abril",label:"13–19 Abr",asesor:"Goodtrade C. Jardín",sug:100000,inv:100000,msg:134,costo:870.57},
+  {mes:"marzo",label:"2–8 Mar",asesor:"Goodtrade Sta. Lucía",sug:50000,inv:50000,msg:51,costo:927.43},
+  {mes:"marzo",label:"9–15 Mar",asesor:"Goodtrade Sta. Lucía",sug:50000,inv:50000,msg:75,costo:667.88},
+  {mes:"marzo",label:"16–22 Mar",asesor:"Goodtrade Sta. Lucía",sug:50000,inv:50000,msg:79,costo:631.72},
+  {mes:"marzo",label:"23–29 Mar",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:100000,msg:115,costo:877.90},
+  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:100000,msg:104,costo:1042.20},
+  {mes:"abril",label:"6–12 Abr",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:100000,msg:73,costo:1368.49},
+  {mes:"abril",label:"13–19 Abr",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:100000,msg:159,costo:628.93},
+  {mes:"marzo",label:"2–8 Mar",asesor:"Sebastian",sug:50000,inv:50000,msg:117,costo:404.83},
+  {mes:"marzo",label:"9–15 Mar",asesor:"Sebastian",sug:50000,inv:50000,msg:132,costo:38.14},
+  {mes:"marzo",label:"16–22 Mar",asesor:"Sebastian",sug:50000,inv:50000,msg:89,costo:561.80},
+  {mes:"marzo",label:"23–29 Mar",asesor:"Sebastian",sug:100000,inv:100000,msg:225,costo:431.05},
+  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Sebastian",sug:100000,inv:100000,msg:171,costo:495.87},
+  {mes:"abril",label:"6–12 Abr",asesor:"Sebastian",sug:100000,inv:100000,msg:175,costo:474.85},
+  {mes:"abril",label:"13–19 Abr",asesor:"Sebastian",sug:100000,inv:100000,msg:199,costo:703.47},
+  {mes:"marzo",label:"2–8 Mar",asesor:"Juan Camilo",sug:50000,inv:50000,msg:111,costo:438.34},
+  {mes:"marzo",label:"9–15 Mar",asesor:"Juan Camilo",sug:50000,inv:50000,msg:87,costo:574.59},
+  {mes:"marzo",label:"16–22 Mar",asesor:"Juan Camilo",sug:50000,inv:50000,msg:53,costo:943.40},
+  {mes:"marzo",label:"23–29 Mar",asesor:"Juan Camilo",sug:100000,inv:100000,msg:221,costo:456.83},
+  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Juan Camilo",sug:100000,inv:100000,msg:171,costo:495.87},
+  {mes:"abril",label:"6–12 Abr",asesor:"Juan Camilo",sug:100000,inv:100000,msg:212,costo:557.64},
+  {mes:"abril",label:"13–19 Abr",asesor:"Juan Camilo",sug:100000,inv:100000,msg:217,costo:504.29},
+  {mes:"marzo",label:"2–8 Mar",asesor:"Andrea",sug:50000,inv:50000,msg:160,costo:416.12},
+  {mes:"marzo",label:"9–15 Mar",asesor:"Andrea",sug:50000,inv:50000,msg:142,costo:479.17},
+  {mes:"marzo",label:"16–22 Mar",asesor:"Andrea",sug:50000,inv:50000,msg:96,costo:692.68},
+  {mes:"marzo",label:"23–29 Mar",asesor:"Andrea",sug:100000,inv:100000,msg:221,costo:542.99},
+  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Andrea",sug:100000,inv:100000,msg:289,costo:444.05},
+  {mes:"abril",label:"6–12 Abr",asesor:"Andrea",sug:100000,inv:100000,msg:259,costo:528.11},
+  {mes:"abril",label:"13–19 Abr",asesor:"Andrea",sug:100000,inv:100000,msg:54,costo:1218.17},
+  {mes:"marzo",label:"2–8 Mar",asesor:"Christian",sug:50000,inv:50000,msg:81,costo:605.88},
+  {mes:"marzo",label:"9–15 Mar",asesor:"Christian",sug:50000,inv:50000,msg:73,costo:684.93},
+  {mes:"marzo",label:"16–22 Mar",asesor:"Christian",sug:50000,inv:50000,msg:93,costo:537.63},
+  {mes:"marzo",label:"23–29 Mar",asesor:"Christian",sug:100000,inv:100000,msg:153,costo:519.46},
+  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Christian",sug:100000,inv:100000,msg:155,costo:475.49},
+  {mes:"abril",label:"6–12 Abr",asesor:"Christian",sug:100000,inv:100000,msg:148,costo:440.65},
+  {mes:"abril",label:"13–19 Abr",asesor:"Christian",sug:100000,inv:100000,msg:221,costo:685.40},
+  {mes:"marzo",label:"2–8 Mar",asesor:"Kommo",sug:0,inv:0,msg:595,costo:586.37},
+  {mes:"marzo",label:"9–15 Mar",asesor:"Kommo",sug:0,inv:0,msg:575,costo:524.04},
+  {mes:"marzo",label:"16–22 Mar",asesor:"Kommo",sug:0,inv:0,msg:511,costo:591.73},
+  {mes:"marzo",label:"23–29 Mar",asesor:"Kommo",sug:1800000,inv:1800000,msg:743,costo:647.57},
+  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Kommo",sug:1800000,inv:0,msg:903,costo:832.78},
+  {mes:"abril",label:"6–12 Abr",asesor:"Kommo",sug:0,inv:0,msg:678,costo:752.29},
+  {mes:"abril",label:"13–19 Abr",asesor:"Kommo",sug:0,inv:0,msg:515,costo:576.81},
 ];
 
-const MESES = [...new Set(RAW.map(d=>d.mes))];
+const MESES = ["marzo","abril"];
 const ASESORES = [...new Set(RAW.map(d=>d.asesor))];
-const COLORES_MES = {marzo:'#378ADD', abril:'#1D9E75', mayo:'#D4537E', junio:'#BA7517', julio:'#7F77DD'};
+const COLORES_MES = {marzo:'#378ADD', abril:'#1D9E75', mayo:'#D4537E', junio:'#BA7517'};
 
 function fmt(n){ return Math.round(n).toLocaleString('es-CO'); }
-function capFirst(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
+function cap(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
 
-// Populate asesor selects
-[document.getElementById('aseFilter'), document.getElementById('aseFilterComp')].forEach(sel => {
+[document.getElementById('aseFilter'), document.getElementById('aseFilterComp')].forEach(sel=>{
   ASESORES.forEach(a=>{ const o=document.createElement('option');o.value=a;o.textContent=a;sel.appendChild(o); });
 });
 
-let currentView = 'detail';
-let barC, msgC, costoC, lineC, compInvC, compMsgC, compCostoC;
+let barC,msgC,costoC,lineC,compInvC,compMsgC,compCostoC;
 
 function setView(v){
-  currentView = v;
-  document.getElementById('viewDetail').style.display = v==='detail'?'block':'none';
-  document.getElementById('viewCompare').style.display = v==='compare'?'block':'none';
-  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active', (i===0&&v==='detail')||(i===1&&v==='compare')));
-  if(v==='detail') update();
-  else updateCompare();
+  document.getElementById('viewDetail').style.display=v==='detail'?'block':'none';
+  document.getElementById('viewCompare').style.display=v==='compare'?'block':'none';
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',(i===0&&v==='detail')||(i===1&&v==='compare')));
+  if(v==='detail') update(); else updateCompare();
 }
 
 function updateFilters(){
-  const mes = document.getElementById('mesFilter').value;
-  const sems = [...new Set(RAW.filter(d=>mes==='all'||d.mes===mes).map(d=>d.label))];
-  const semSel = document.getElementById('semFilter');
-  semSel.innerHTML = '<option value="all">Todas</option>';
+  const mes=document.getElementById('mesFilter').value;
+  const sems=[...new Set(RAW.filter(d=>mes==='all'||d.mes===mes).map(d=>d.label))];
+  const semSel=document.getElementById('semFilter');
+  semSel.innerHTML='<option value="all">Todas</option>';
   sems.forEach(s=>{ const o=document.createElement('option');o.value=s;o.textContent=s;semSel.appendChild(o); });
   update();
 }
 
 function filtered(){
-  const mes = document.getElementById('mesFilter').value;
-  const sem = document.getElementById('semFilter').value;
-  const ase = document.getElementById('aseFilter').value;
+  const mes=document.getElementById('mesFilter').value;
+  const sem=document.getElementById('semFilter').value;
+  const ase=document.getElementById('aseFilter').value;
   return RAW.filter(d=>(mes==='all'||d.mes===mes)&&(sem==='all'||d.label===sem)&&(ase==='all'||d.asesor===ase));
 }
 
 function update(){
-  const data = filtered();
-  const totalInv = data.reduce((s,d)=>s+d.inv,0);
-  const totalSug = data.reduce((s,d)=>s+d.sug,0);
-  const totalMsg = data.reduce((s,d)=>s+d.msg,0);
-  const avgCosto = totalMsg>0?totalInv/totalMsg:0;
-  const pctExec = totalSug>0?(totalInv/totalSug*100):0;
+  const data=filtered();
+  const totalInv=data.reduce((s,d)=>s+d.inv,0);
+  const totalSug=data.reduce((s,d)=>s+d.sug,0);
+  const totalMsg=data.reduce((s,d)=>s+d.msg,0);
+  const avgCosto=totalMsg>0?totalInv/totalMsg:0;
+  const pctExec=totalSug>0?(totalInv/totalSug*100):0;
 
   document.getElementById('kpi1').textContent='$'+fmt(totalInv);
   document.getElementById('kpi2').textContent=fmt(totalMsg);
@@ -272,26 +293,23 @@ function update(){
   document.getElementById('kpi4').textContent=pctExec.toFixed(1)+'%';
 
   const byAse={};
-  data.forEach(d=>{
-    if(!byAse[d.asesor]) byAse[d.asesor]={sug:0,inv:0,msg:0};
-    byAse[d.asesor].sug+=d.sug; byAse[d.asesor].inv+=d.inv; byAse[d.asesor].msg+=d.msg;
-  });
+  data.forEach(d=>{ if(!byAse[d.asesor]) byAse[d.asesor]={sug:0,inv:0,msg:0}; byAse[d.asesor].sug+=d.sug; byAse[d.asesor].inv+=d.inv; byAse[d.asesor].msg+=d.msg; });
   const aseLabels=Object.keys(byAse);
-  const shortLabels=aseLabels.map(a=>a.length>11?a.slice(0,11)+'…':a);
+  const shortL=aseLabels.map(a=>a.length>11?a.slice(0,11)+'…':a);
 
   if(barC) barC.destroy();
-  barC=new Chart(document.getElementById('barChart'),{type:'bar',data:{labels:shortLabels,datasets:[
+  barC=new Chart(document.getElementById('barChart'),{type:'bar',data:{labels:shortL,datasets:[
     {label:'Sugerida',data:aseLabels.map(a=>byAse[a].sug),backgroundColor:'#378ADD',borderRadius:3},
     {label:'Real',data:aseLabels.map(a=>byAse[a].inv),backgroundColor:'#1D9E75',borderRadius:3}
   ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}},y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
 
   if(msgC) msgC.destroy();
-  msgC=new Chart(document.getElementById('msgChart'),{type:'bar',data:{labels:shortLabels,datasets:[
+  msgC=new Chart(document.getElementById('msgChart'),{type:'bar',data:{labels:shortL,datasets:[
     {label:'Mensajes',data:aseLabels.map(a=>byAse[a].msg),backgroundColor:'#D4537E',borderRadius:3}
   ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}}}}});
 
   if(costoC) costoC.destroy();
-  costoC=new Chart(document.getElementById('costoChart'),{type:'bar',data:{labels:shortLabels,datasets:[
+  costoC=new Chart(document.getElementById('costoChart'),{type:'bar',data:{labels:shortL,datasets:[
     {label:'Costo/msg',data:aseLabels.map(a=>byAse[a].msg>0?Math.round(byAse[a].inv/byAse[a].msg):0),backgroundColor:'#BA7517',borderRadius:3}
   ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}},y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
 
@@ -307,60 +325,42 @@ function update(){
   data.forEach(d=>{
     const pct=d.sug>0?d.inv/d.sug*100:null;
     const badge=pct===null?'<span class="badge badge-amber">Sin ref.</span>':pct>=100?'<span class="badge badge-green">'+pct.toFixed(0)+'%</span>':pct>=75?'<span class="badge badge-amber">'+pct.toFixed(0)+'%</span>':'<span class="badge badge-red">'+pct.toFixed(0)+'%</span>';
-    tbody.innerHTML+=`<tr><td><strong>${d.asesor}</strong></td><td><span class="badge badge-blue">${capFirst(d.mes)}</span></td><td style="color:#888780">${d.label}</td><td>$${fmt(d.inv)}</td><td>${fmt(d.msg)}</td><td>$${fmt(d.costo)}</td><td>${badge}</td></tr>`;
+    tbody.innerHTML+=`<tr><td><strong>${d.asesor}</strong></td><td><span class="badge badge-blue">${cap(d.mes)}</span></td><td style="color:#888780">${d.label}</td><td>$${fmt(d.inv)}</td><td>${fmt(d.msg)}</td><td>$${fmt(d.costo)}</td><td>${badge}</td></tr>`;
   });
 }
 
 function updateCompare(){
-  const ase = document.getElementById('aseFilterComp').value;
-  const data = RAW.filter(d=>ase==='all'||d.asesor===ase);
-
+  const ase=document.getElementById('aseFilterComp').value;
+  const data=RAW.filter(d=>ase==='all'||d.asesor===ase);
   const byMes={};
-  MESES.forEach(m=>{
-    const md=data.filter(d=>d.mes===m);
-    byMes[m]={inv:md.reduce((s,d)=>s+d.inv,0),msg:md.reduce((s,d)=>s+d.msg,0),sug:md.reduce((s,d)=>s+d.sug,0)};
-    byMes[m].costo=byMes[m].msg>0?byMes[m].inv/byMes[m].msg:0;
-  });
+  MESES.forEach(m=>{ const md=data.filter(d=>d.mes===m); byMes[m]={inv:md.reduce((s,d)=>s+d.inv,0),msg:md.reduce((s,d)=>s+d.msg,0),sug:md.reduce((s,d)=>s+d.sug,0)}; byMes[m].costo=byMes[m].msg>0?byMes[m].inv/byMes[m].msg:0; });
 
-  // KPIs comparativos
   const kpiEl=document.getElementById('kpiCompare');
   kpiEl.innerHTML='';
   MESES.forEach((m,i)=>{
     const prev=i>0?byMes[MESES[i-1]]:null;
     const deltaInv=prev&&prev.inv>0?((byMes[m].inv-prev.inv)/prev.inv*100):null;
-    const deltaClass=deltaInv===null?'':deltaInv>=0?'delta-up':'delta-down';
-    const deltaSign=deltaInv===null?'':deltaInv>=0?'▲':'▼';
-    kpiEl.innerHTML+=`<div class="kpi">
-      <div class="kpi-label">Inversión ${capFirst(m)}</div>
-      <div class="kpi-value">$${fmt(byMes[m].inv)}</div>
-      ${deltaInv!==null?`<div class="kpi-delta ${deltaClass}">${deltaSign} ${Math.abs(deltaInv).toFixed(1)}% vs ${capFirst(MESES[i-1])}</div>`:'<div class="kpi-sub">Primer mes</div>'}
-    </div>`;
+    const dc=deltaInv===null?'':deltaInv>=0?'delta-up':'delta-down';
+    const ds=deltaInv===null?'':deltaInv>=0?'▲':'▼';
+    kpiEl.innerHTML+=`<div class="kpi"><div class="kpi-label">Inversión ${cap(m)}</div><div class="kpi-value">$${fmt(byMes[m].inv)}</div>${deltaInv!==null?`<div class="kpi-delta ${dc}">${ds} ${Math.abs(deltaInv).toFixed(1)}% vs ${cap(MESES[i-1])}</div>`:'<div class="kpi-sub">Primer mes</div>'}</div>`;
   });
 
-  const mesLabels=MESES.map(m=>capFirst(m));
-  const colors=MESES.map(m=>COLORES_MES[m]||'#888780');
+  const mesLabels=MESES.map(m=>cap(m));
+  const colors=MESES.map(m=>COLORES_MES[m]||'#888');
 
   if(compInvC) compInvC.destroy();
-  compInvC=new Chart(document.getElementById('compInvChart'),{type:'bar',data:{labels:mesLabels,datasets:[
-    {label:'Inversión',data:MESES.map(m=>byMes[m].inv),backgroundColor:colors,borderRadius:4}
-  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
+  compInvC=new Chart(document.getElementById('compInvChart'),{type:'bar',data:{labels:mesLabels,datasets:[{label:'Inversión',data:MESES.map(m=>byMes[m].inv),backgroundColor:colors,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
 
   if(compMsgC) compMsgC.destroy();
-  compMsgC=new Chart(document.getElementById('compMsgChart'),{type:'bar',data:{labels:mesLabels,datasets:[
-    {label:'Mensajes',data:MESES.map(m=>byMes[m].msg),backgroundColor:colors,borderRadius:4}
-  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
+  compMsgC=new Chart(document.getElementById('compMsgChart'),{type:'bar',data:{labels:mesLabels,datasets:[{label:'Mensajes',data:MESES.map(m=>byMes[m].msg),backgroundColor:colors,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
 
   if(compCostoC) compCostoC.destroy();
-  compCostoC=new Chart(document.getElementById('compCostoChart'),{type:'line',data:{labels:mesLabels,datasets:[
-    {label:'Costo/msg',data:MESES.map(m=>Math.round(byMes[m].costo)),borderColor:'#BA7517',backgroundColor:'rgba(186,117,23,0.1)',pointBackgroundColor:colors,tension:0.3,fill:true}
-  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
+  compCostoC=new Chart(document.getElementById('compCostoChart'),{type:'line',data:{labels:mesLabels,datasets:[{label:'Costo/msg',data:MESES.map(m=>Math.round(byMes[m].costo)),borderColor:'#BA7517',backgroundColor:'rgba(186,117,23,0.1)',pointBackgroundColor:colors,tension:0.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
 
-  // Leyenda
   ['legendCompInv','legendCompMsg','legendCompCosto'].forEach(id=>{
-    document.getElementById(id).innerHTML=MESES.map(m=>`<span><span class="legend-dot" style="background:${COLORES_MES[m]||'#888'}"></span>${capFirst(m)}</span>`).join('');
+    document.getElementById(id).innerHTML=MESES.map(m=>`<span><span class="legend-dot" style="background:${COLORES_MES[m]}"></span>${cap(m)}</span>`).join('');
   });
 
-  // Tabla comparativa por asesor y mes
   const tbody=document.getElementById('tableCompare');
   tbody.innerHTML='';
   const aseFilt=ase==='all'?ASESORES:[ase];
@@ -374,7 +374,7 @@ function updateCompare(){
       const costo=msg>0?inv/msg:0;
       const pct=sug>0?inv/sug*100:null;
       const badge=pct===null?'<span class="badge badge-amber">Sin ref.</span>':pct>=100?'<span class="badge badge-green">'+pct.toFixed(0)+'%</span>':pct>=75?'<span class="badge badge-amber">'+pct.toFixed(0)+'%</span>':'<span class="badge badge-red">'+pct.toFixed(0)+'%</span>';
-      tbody.innerHTML+=`<tr><td><strong>${a}</strong></td><td><span class="badge badge-blue">${capFirst(m)}</span></td><td>$${fmt(inv)}</td><td>${fmt(msg)}</td><td>$${fmt(costo)}</td><td>${badge}</td></tr>`;
+      tbody.innerHTML+=`<tr><td><strong>${a}</strong></td><td><span class="badge badge-blue">${cap(m)}</span></td><td>$${fmt(inv)}</td><td>${fmt(msg)}</td><td>$${fmt(costo)}</td><td>${badge}</td></tr>`;
     });
   });
 }
