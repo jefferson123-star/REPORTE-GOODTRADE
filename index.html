@@ -13,15 +13,19 @@
   .header h1 { font-size: 22px; font-weight: 600; color: #1a1a18; }
   .header p { font-size: 13px; color: #5f5e5a; margin-top: 4px; }
   .tabs { display: flex; gap: 4px; margin-bottom: 1.5rem; background: #fff; padding: 6px; border-radius: 10px; border: 0.5px solid #d3d1c7; flex-wrap: wrap; }
-  .tab { padding: 8px 18px; border-radius: 7px; font-size: 13px; font-weight: 500; cursor: pointer; color: #5f5e5a; border: none; background: none; }
+  .tab { padding: 8px 16px; border-radius: 7px; font-size: 13px; font-weight: 500; cursor: pointer; color: #5f5e5a; border: none; background: none; }
   .tab.active { background: #1a1a18; color: #fff; }
   .filter-row { display: flex; gap: 12px; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: center; background: #fff; padding: 12px 16px; border-radius: 10px; border: 0.5px solid #d3d1c7; }
   .filter-row label { font-size: 13px; color: #5f5e5a; font-weight: 500; }
   select { font-size: 13px; padding: 7px 12px; border-radius: 8px; border: 0.5px solid #b4b2a9; background: #f5f5f3; color: #1a1a18; cursor: pointer; outline: none; }
-  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
-  .kpi { background: #fff; border-radius: 10px; padding: 1.1rem 1.25rem; border: 0.5px solid #d3d1c7; }
+  .checkbox-group { display: flex; flex-wrap: wrap; gap: 8px; }
+  .checkbox-group label { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #1a1a18; cursor: pointer; background: #f5f5f3; border: 0.5px solid #b4b2a9; border-radius: 6px; padding: 5px 10px; }
+  .checkbox-group input[type=checkbox] { accent-color: #1a1a18; width: 13px; height: 13px; }
+  .checkbox-group label.checked { background: #1a1a18; color: #fff; border-color: #1a1a18; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
+  .kpi { background: #fff; border-radius: 10px; padding: 1rem 1.25rem; border: 0.5px solid #d3d1c7; }
   .kpi-label { font-size: 12px; color: #888780; margin-bottom: 6px; }
-  .kpi-value { font-size: 26px; font-weight: 600; color: #1a1a18; }
+  .kpi-value { font-size: 22px; font-weight: 600; color: #1a1a18; }
   .kpi-sub { font-size: 12px; color: #888780; margin-top: 4px; }
   .kpi-delta { font-size: 12px; margin-top: 4px; font-weight: 500; }
   .delta-up { color: #3B6D11; }
@@ -62,100 +66,153 @@
   </div>
 
   <div class="tabs">
-    <button class="tab active" onclick="setView('detail')">Por semana</button>
-    <button class="tab" onclick="setView('compare')">Comparativa mensual</button>
+    <button class="tab active" onclick="setView('semana')">Por semana</button>
+    <button class="tab" onclick="setView('mes')">Por mes</button>
+    <button class="tab" onclick="setView('compSem')">Comparativa semanal</button>
+    <button class="tab" onclick="setView('compMes')">Comparativa mensual</button>
   </div>
 
-  <div id="viewDetail">
+  <!-- POR SEMANA -->
+  <div id="viewSemana">
     <div class="filter-row">
-      <label>Mes:</label>
-      <select id="mesFilter" onchange="updateFilters()">
-        <option value="all">Todos los meses</option>
-        <option value="marzo">Marzo</option>
-        <option value="abril">Abril</option>
-      </select>
       <label>Semana:</label>
-      <select id="semFilter" onchange="update()"><option value="all">Todas</option></select>
+      <select id="sf_sem" onchange="updateSemana()"><option value="all">Todas</option></select>
       <label>Asesor:</label>
-      <select id="aseFilter" onchange="update()"><option value="all">Todos</option></select>
+      <select id="sf_ase" onchange="updateSemana()"><option value="all">Todos</option></select>
     </div>
-
     <div class="kpi-grid">
-      <div class="kpi"><div class="kpi-label">Inversión total</div><div class="kpi-value" id="kpi1">—</div><div class="kpi-sub">COP</div></div>
-      <div class="kpi"><div class="kpi-label">Mensajes enviados</div><div class="kpi-value" id="kpi2">—</div><div class="kpi-sub">total WhatsApp</div></div>
-      <div class="kpi"><div class="kpi-label">Inversión por mensajes WA</div><div class="kpi-value" id="kpi5">—</div><div class="kpi-sub">COP invertido en WA</div></div>
-      <div class="kpi"><div class="kpi-label">Costo promedio / msg</div><div class="kpi-value" id="kpi3">—</div><div class="kpi-sub">COP por mensaje</div></div>
-      <div class="kpi"><div class="kpi-label">% ejecución budget</div><div class="kpi-value" id="kpi4">—</div><div class="kpi-sub">inversión / sugerida</div></div>
+      <div class="kpi"><div class="kpi-label">Inversión total</div><div class="kpi-value" id="s1">—</div><div class="kpi-sub">COP</div></div>
+      <div class="kpi"><div class="kpi-label">Mensajes enviados</div><div class="kpi-value" id="s2">—</div><div class="kpi-sub">total WhatsApp</div></div>
+      <div class="kpi"><div class="kpi-label">Inv. por mensajes WA</div><div class="kpi-value" id="s5">—</div><div class="kpi-sub">COP invertido en WA</div></div>
+      <div class="kpi"><div class="kpi-label">Costo promedio / msg</div><div class="kpi-value" id="s3">—</div><div class="kpi-sub">COP por mensaje</div></div>
+      <div class="kpi"><div class="kpi-label">% ejecución budget</div><div class="kpi-value" id="s4">—</div><div class="kpi-sub">inversión / sugerida</div></div>
     </div>
-
     <div class="chart-row">
       <div class="chart-box">
-        <h3>Inversión real vs sugerida por asesor</h3>
+        <h3>Inv. WA vs inversión real por asesor</h3>
         <div class="legend">
-          <span><span class="legend-dot" style="background:#378ADD"></span>Inv. por mensajes WA</span>
+          <span><span class="legend-dot" style="background:#378ADD"></span>Inv. WA</span>
           <span><span class="legend-dot" style="background:#1D9E75"></span>Real</span>
         </div>
-        <div style="position:relative;height:260px;"><canvas id="barChart"></canvas></div>
+        <div style="position:relative;height:260px;"><canvas id="s_bar"></canvas></div>
       </div>
       <div class="chart-box">
         <h3>Mensajes por asesor</h3>
         <div class="legend"><span><span class="legend-dot" style="background:#D4537E"></span>Mensajes WA</span></div>
-        <div style="position:relative;height:260px;"><canvas id="msgChart"></canvas></div>
+        <div style="position:relative;height:260px;"><canvas id="s_msg"></canvas></div>
       </div>
     </div>
-
     <div class="chart-row">
       <div class="chart-box">
-        <h3>Costo por mensaje por asesor (COP)</h3>
+        <h3>Costo por mensaje por asesor</h3>
         <div class="legend"><span><span class="legend-dot" style="background:#BA7517"></span>Costo / msg</span></div>
-        <div style="position:relative;height:220px;"><canvas id="costoChart"></canvas></div>
+        <div style="position:relative;height:220px;"><canvas id="s_costo"></canvas></div>
       </div>
       <div class="chart-box">
-        <h3>Evolución semanal — inversión total</h3>
+        <h3>Evolución semanal — inversión</h3>
         <div class="legend"><span><span class="legend-dot" style="background:#7F77DD"></span>Inversión</span></div>
-        <div style="position:relative;height:220px;"><canvas id="lineChart"></canvas></div>
+        <div style="position:relative;height:220px;"><canvas id="s_line"></canvas></div>
       </div>
     </div>
-
-    <div class="section-title">Detalle por asesor y semana</div>
-    <div class="table-box">
-      <table>
-        <thead><tr><th>Asesor</th><th>Mes</th><th>Semana</th><th>Inv. real</th><th>Mensajes</th><th>Costo / msg</th><th>% ejecución</th></tr></thead>
-        <tbody id="tableBody"></tbody>
-      </table>
-    </div>
+    <div class="section-title">Detalle por semana</div>
+    <div class="table-box"><table>
+      <thead><tr><th>Asesor</th><th>Mes</th><th>Semana</th><th>Inv. real</th><th>Inv. WA</th><th>Mensajes</th><th>Costo/msg</th><th>% ejec.</th></tr></thead>
+      <tbody id="s_tbl"></tbody>
+    </table></div>
   </div>
 
-  <div id="viewCompare" style="display:none;">
+  <!-- POR MES -->
+  <div id="viewMes" style="display:none;">
+    <div class="filter-row">
+      <label>Mes:</label>
+      <div class="checkbox-group" id="mf_meses"></div>
+      <label>Asesor:</label>
+      <select id="mf_ase" onchange="updateMes()"><option value="all">Todos</option></select>
+    </div>
+    <div class="kpi-grid" id="m_kpis"></div>
+    <div class="chart-row">
+      <div class="chart-box">
+        <h3>Inv. WA vs real por asesor</h3>
+        <div class="legend">
+          <span><span class="legend-dot" style="background:#378ADD"></span>Inv. WA</span>
+          <span><span class="legend-dot" style="background:#1D9E75"></span>Real</span>
+        </div>
+        <div style="position:relative;height:260px;"><canvas id="m_bar"></canvas></div>
+      </div>
+      <div class="chart-box">
+        <h3>Mensajes por asesor</h3>
+        <div class="legend"><span><span class="legend-dot" style="background:#D4537E"></span>Mensajes</span></div>
+        <div style="position:relative;height:260px;"><canvas id="m_msg"></canvas></div>
+      </div>
+    </div>
+    <div class="section-title">Resumen por mes y asesor</div>
+    <div class="table-box"><table>
+      <thead><tr><th>Asesor</th><th>Mes</th><th>Inv. real</th><th>Inv. WA</th><th>Mensajes</th><th>Costo/msg</th><th>% ejec.</th></tr></thead>
+      <tbody id="m_tbl"></tbody>
+    </table></div>
+  </div>
+
+  <!-- COMPARATIVA SEMANAL -->
+  <div id="viewCompSem" style="display:none;">
+    <div class="filter-row">
+      <label>Semanas a comparar:</label>
+      <div class="checkbox-group" id="cs_sems"></div>
+    </div>
     <div class="filter-row">
       <label>Asesor:</label>
-      <select id="aseFilterComp" onchange="updateCompare()"><option value="all">Todos</option></select>
+      <select id="cs_ase" onchange="updateCompSem()"><option value="all">Todos</option></select>
     </div>
-    <div class="kpi-grid" id="kpiCompare"></div>
+    <div class="chart-full">
+      <h3>Inversión real por semana seleccionada</h3>
+      <div style="position:relative;height:300px;"><canvas id="cs_inv"></canvas></div>
+    </div>
+    <div class="chart-row">
+      <div class="chart-box">
+        <h3>Mensajes por semana</h3>
+        <div style="position:relative;height:240px;"><canvas id="cs_msg"></canvas></div>
+      </div>
+      <div class="chart-box">
+        <h3>Costo / msg por semana</h3>
+        <div style="position:relative;height:240px;"><canvas id="cs_costo"></canvas></div>
+      </div>
+    </div>
+    <div class="section-title">Detalle semanas seleccionadas</div>
+    <div class="table-box"><table>
+      <thead><tr><th>Semana</th><th>Mes</th><th>Inv. real</th><th>Inv. WA</th><th>Mensajes</th><th>Costo/msg</th></tr></thead>
+      <tbody id="cs_tbl"></tbody>
+    </table></div>
+  </div>
+
+  <!-- COMPARATIVA MENSUAL -->
+  <div id="viewCompMes" style="display:none;">
+    <div class="filter-row">
+      <label>Meses a comparar:</label>
+      <div class="checkbox-group" id="cm_meses"></div>
+    </div>
+    <div class="filter-row">
+      <label>Asesor:</label>
+      <select id="cm_ase" onchange="updateCompMes()"><option value="all">Todos</option></select>
+    </div>
+    <div class="kpi-grid" id="cm_kpis"></div>
     <div class="chart-full">
       <h3>Inversión total por mes</h3>
-      <div class="legend" id="legendCompInv"></div>
-      <div style="position:relative;height:280px;"><canvas id="compInvChart"></canvas></div>
+      <div style="position:relative;height:280px;"><canvas id="cm_inv"></canvas></div>
     </div>
     <div class="chart-row">
       <div class="chart-box">
         <h3>Mensajes por mes</h3>
-        <div class="legend" id="legendCompMsg"></div>
-        <div style="position:relative;height:240px;"><canvas id="compMsgChart"></canvas></div>
+        <div style="position:relative;height:240px;"><canvas id="cm_msg"></canvas></div>
       </div>
       <div class="chart-box">
         <h3>Costo promedio / msg por mes</h3>
-        <div class="legend" id="legendCompCosto"></div>
-        <div style="position:relative;height:240px;"><canvas id="compCostoChart"></canvas></div>
+        <div style="position:relative;height:240px;"><canvas id="cm_costo"></canvas></div>
       </div>
     </div>
     <div class="section-title">Resumen por mes y asesor</div>
-    <div class="table-box">
-      <table>
-        <thead><tr><th>Asesor</th><th>Mes</th><th>Inv. total</th><th>Mensajes</th><th>Costo / msg</th><th>% ejec.</th></tr></thead>
-        <tbody id="tableCompare"></tbody>
-      </table>
-    </div>
+    <div class="table-box"><table>
+      <thead><tr><th>Asesor</th><th>Mes</th><th>Inv. total</th><th>Inv. WA</th><th>Mensajes</th><th>Costo/msg</th><th>% ejec.</th></tr></thead>
+      <tbody id="cm_tbl"></tbody>
+    </table></div>
   </div>
 
   <div class="footer">Reporte Goodtrade · 2 Marzo – 19 Abril 2026</div>
@@ -230,135 +287,206 @@ const RAW = [
 
 const MESES=["marzo","abril"];
 const ASESORES=[...new Set(RAW.map(d=>d.asesor))];
-const COLORES_MES={marzo:'#378ADD',abril:'#1D9E75',mayo:'#D4537E',junio:'#BA7517'};
+const SEMANAS=[...new Set(RAW.map(d=>d.label))];
+const COL_MES={marzo:'#378ADD',abril:'#1D9E75',mayo:'#D4537E',junio:'#BA7517'};
+const COL_SEM=['#7F77DD','#378ADD','#1D9E75','#D4537E','#BA7517','#534AB7','#993556'];
+
 function fmt(n){return Math.round(n).toLocaleString('es-CO');}
 function cap(s){return s.charAt(0).toUpperCase()+s.slice(1);}
+function bdg(p){
+  if(p===null) return '<span class="badge badge-amber">Sin ref.</span>';
+  if(p>=100) return '<span class="badge badge-green">'+p.toFixed(0)+'%</span>';
+  if(p>=75) return '<span class="badge badge-amber">'+p.toFixed(0)+'%</span>';
+  return '<span class="badge badge-red">'+p.toFixed(0)+'%</span>';
+}
 
-[document.getElementById('aseFilter'),document.getElementById('aseFilterComp')].forEach(sel=>{
-  ASESORES.forEach(a=>{const o=document.createElement('option');o.value=a;o.textContent=a;sel.appendChild(o);});
+let charts={};
+function mkChart(id,cfg){if(charts[id])charts[id].destroy();charts[id]=new Chart(document.getElementById(id),cfg);}
+
+// Populate selects
+['sf_ase','mf_ase','cs_ase','cm_ase'].forEach(id=>{
+  const s=document.getElementById(id);
+  ASESORES.forEach(a=>{const o=document.createElement('option');o.value=a;o.textContent=a;s.appendChild(o);});
 });
 
-let barC,msgC,costoC,lineC,compInvC,compMsgC,compCostoC;
+// Semanas select for Por semana
+const sfSem=document.getElementById('sf_sem');
+SEMANAS.forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=s;sfSem.appendChild(o);});
+
+// Checkboxes meses (Por mes)
+const mfMeses=document.getElementById('mf_meses');
+MESES.forEach(m=>{
+  const lbl=document.createElement('label');
+  lbl.className='checked';
+  lbl.innerHTML=`<input type="checkbox" value="${m}" checked onchange="styleCheck(this);updateMes()"> ${cap(m)}`;
+  mfMeses.appendChild(lbl);
+});
+
+// Checkboxes semanas (Comp. semanal)
+const csSems=document.getElementById('cs_sems');
+SEMANAS.forEach((s,i)=>{
+  const lbl=document.createElement('label');
+  lbl.className=i<2?'checked':'';
+  lbl.innerHTML=`<input type="checkbox" value="${s}" ${i<2?'checked':''} onchange="styleCheck(this);updateCompSem()"> ${s}`;
+  csSems.appendChild(lbl);
+});
+
+// Checkboxes meses (Comp. mensual)
+const cmMeses=document.getElementById('cm_meses');
+MESES.forEach(m=>{
+  const lbl=document.createElement('label');
+  lbl.className='checked';
+  lbl.innerHTML=`<input type="checkbox" value="${m}" checked onchange="styleCheck(this);updateCompMes()"> ${cap(m)}`;
+  cmMeses.appendChild(lbl);
+});
+
+function styleCheck(cb){cb.parentElement.className=cb.checked?'checked':'';}
+
+function getChecked(groupId){
+  return [...document.querySelectorAll(`#${groupId} input[type=checkbox]:checked`)].map(c=>c.value);
+}
 
 function setView(v){
-  document.getElementById('viewDetail').style.display=v==='detail'?'block':'none';
-  document.getElementById('viewCompare').style.display=v==='compare'?'block':'none';
-  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',(i===0&&v==='detail')||(i===1&&v==='compare')));
-  if(v==='detail') update(); else updateCompare();
+  ['semana','mes','compSem','compMes'].forEach(n=>{
+    const el=document.getElementById('view'+n.charAt(0).toUpperCase()+n.slice(1));
+    if(el) el.style.display='none';
+  });
+  document.getElementById('view'+v.charAt(0).toUpperCase()+v.slice(1)).style.display='block';
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['semana','mes','compSem','compMes'][i]===v));
+  if(v==='semana') updateSemana();
+  else if(v==='mes') updateMes();
+  else if(v==='compSem') updateCompSem();
+  else updateCompMes();
 }
 
-function updateFilters(){
-  const mes=document.getElementById('mesFilter').value;
-  const sems=[...new Set(RAW.filter(d=>mes==='all'||d.mes===mes).map(d=>d.label))];
-  const semSel=document.getElementById('semFilter');
-  semSel.innerHTML='<option value="all">Todas</option>';
-  sems.forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=s;semSel.appendChild(o);});
-  update();
-}
+// ---- POR SEMANA ----
+function updateSemana(){
+  const sem=document.getElementById('sf_sem').value;
+  const ase=document.getElementById('sf_ase').value;
+  const data=RAW.filter(d=>(sem==='all'||d.label===sem)&&(ase==='all'||d.asesor===ase));
+  const ti=data.reduce((s,d)=>s+d.inv,0);
+  const ts=data.reduce((s,d)=>s+d.sug,0);
+  const tm=data.reduce((s,d)=>s+d.msg,0);
+  const tw=data.reduce((s,d)=>s+d.invWA,0);
+  document.getElementById('s1').textContent='$'+fmt(ti);
+  document.getElementById('s2').textContent=fmt(tm);
+  document.getElementById('s5').textContent='$'+fmt(tw);
+  document.getElementById('s3').textContent='$'+fmt(tm>0?ti/tm:0);
+  document.getElementById('s4').textContent=(ts>0?ti/ts*100:0).toFixed(1)+'%';
 
-function filtered(){
-  const mes=document.getElementById('mesFilter').value;
-  const sem=document.getElementById('semFilter').value;
-  const ase=document.getElementById('aseFilter').value;
-  return RAW.filter(d=>(mes==='all'||d.mes===mes)&&(sem==='all'||d.label===sem)&&(ase==='all'||d.asesor===ase));
-}
+  const byA={};
+  data.forEach(d=>{if(!byA[d.asesor])byA[d.asesor]={inv:0,wa:0,msg:0};byA[d.asesor].inv+=d.inv;byA[d.asesor].wa+=d.invWA;byA[d.asesor].msg+=d.msg;});
+  const aL=Object.keys(byA);
+  const sL=aL.map(a=>a.length>11?a.slice(0,11)+'…':a);
 
-function update(){
-  const data=filtered();
-  const totalInv=data.reduce((s,d)=>s+d.inv,0);
-  const totalSug=data.reduce((s,d)=>s+d.sug,0);
-  const totalMsg=data.reduce((s,d)=>s+d.msg,0);
-  const avgCosto=totalMsg>0?totalInv/totalMsg:0;
-  const pctExec=totalSug>0?(totalInv/totalSug*100):0;
-  const totalInvWA=data.reduce((s,d)=>s+(d.invWA||0),0);
-  document.getElementById('kpi1').textContent='$'+fmt(totalInv);
-  document.getElementById('kpi2').textContent=fmt(totalMsg);
-  document.getElementById('kpi5').textContent='$'+fmt(totalInvWA);
-  document.getElementById('kpi3').textContent='$'+fmt(avgCosto);
-  document.getElementById('kpi4').textContent=pctExec.toFixed(1)+'%';
-
-  const byAse={};
-  data.forEach(d=>{if(!byAse[d.asesor])byAse[d.asesor]={sug:0,inv:0,invWA:0,msg:0};byAse[d.asesor].sug+=d.sug;byAse[d.asesor].inv+=d.inv;byAse[d.asesor].invWA+=(d.invWA||0);byAse[d.asesor].msg+=d.msg;});
-  const aseLabels=Object.keys(byAse);
-  const shortL=aseLabels.map(a=>a.length>11?a.slice(0,11)+'…':a);
-
-  if(barC)barC.destroy();
-  barC=new Chart(document.getElementById('barChart'),{type:'bar',data:{labels:shortL,datasets:[
-    {label:'Inv. por mensajes WA',data:aseLabels.map(a=>byAse[a].invWA),backgroundColor:'#378ADD',borderRadius:3},
-    {label:'Real',data:aseLabels.map(a=>byAse[a].inv),backgroundColor:'#1D9E75',borderRadius:3}
+  mkChart('s_bar',{type:'bar',data:{labels:sL,datasets:[
+    {label:'Inv. WA',data:aL.map(a=>byA[a].wa),backgroundColor:'#378ADD',borderRadius:3},
+    {label:'Real',data:aL.map(a=>byA[a].inv),backgroundColor:'#1D9E75',borderRadius:3}
   ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}},y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
 
-  if(msgC)msgC.destroy();
-  msgC=new Chart(document.getElementById('msgChart'),{type:'bar',data:{labels:shortL,datasets:[{label:'Mensajes',data:aseLabels.map(a=>byAse[a].msg),backgroundColor:'#D4537E',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}}}}});
+  mkChart('s_msg',{type:'bar',data:{labels:sL,datasets:[{label:'Msgs',data:aL.map(a=>byA[a].msg),backgroundColor:'#D4537E',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}}}}});
 
-  if(costoC)costoC.destroy();
-  costoC=new Chart(document.getElementById('costoChart'),{type:'bar',data:{labels:shortL,datasets:[{label:'Costo/msg',data:aseLabels.map(a=>byAse[a].msg>0?Math.round(byAse[a].inv/byAse[a].msg):0),backgroundColor:'#BA7517',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}},y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
+  mkChart('s_costo',{type:'bar',data:{labels:sL,datasets:[{label:'Costo',data:aL.map(a=>byA[a].msg>0?Math.round(byA[a].inv/byA[a].msg):0),backgroundColor:'#BA7517',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}},y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
 
   const sems=[...new Set(data.map(d=>d.label))];
-  const lineVals=sems.map(s=>data.filter(d=>d.label===s).reduce((t,d)=>t+d.inv,0));
-  if(lineC)lineC.destroy();
-  lineC=new Chart(document.getElementById('lineChart'),{type:'line',data:{labels:sems,datasets:[{label:'Inversión',data:lineVals,borderColor:'#7F77DD',backgroundColor:'rgba(127,119,221,0.1)',pointBackgroundColor:'#7F77DD',tension:0.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
+  mkChart('s_line',{type:'line',data:{labels:sems,datasets:[{label:'Inv',data:sems.map(s=>data.filter(d=>d.label===s).reduce((t,d)=>t+d.inv,0)),borderColor:'#7F77DD',backgroundColor:'rgba(127,119,221,0.1)',pointBackgroundColor:'#7F77DD',tension:0.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
 
-  const tbody=document.getElementById('tableBody');
-  tbody.innerHTML='';
-  data.forEach(d=>{
-    const pct=d.sug>0?d.inv/d.sug*100:null;
-    const badge=pct===null?'<span class="badge badge-amber">Sin ref.</span>':pct>=100?'<span class="badge badge-green">'+pct.toFixed(0)+'%</span>':pct>=75?'<span class="badge badge-amber">'+pct.toFixed(0)+'%</span>':'<span class="badge badge-red">'+pct.toFixed(0)+'%</span>';
-    tbody.innerHTML+=`<tr><td><strong>${d.asesor}</strong></td><td><span class="badge badge-blue">${cap(d.mes)}</span></td><td style="color:#888780">${d.label}</td><td>$${fmt(d.inv)}</td><td>${fmt(d.msg)}</td><td>$${fmt(d.costo)}</td><td>${badge}</td></tr>`;
-  });
+  const tb=document.getElementById('s_tbl');tb.innerHTML='';
+  data.forEach(d=>{const p=d.sug>0?d.inv/d.sug*100:null;tb.innerHTML+=`<tr><td><strong>${d.asesor}</strong></td><td><span class="badge badge-blue">${cap(d.mes)}</span></td><td style="color:#888780">${d.label}</td><td>$${fmt(d.inv)}</td><td>$${fmt(d.invWA)}</td><td>${fmt(d.msg)}</td><td>$${fmt(d.costo)}</td><td>${bdg(p)}</td></tr>`;});
 }
 
-function updateCompare(){
-  const ase=document.getElementById('aseFilterComp').value;
-  const data=RAW.filter(d=>ase==='all'||d.asesor===ase);
-  const byMes={};
-  MESES.forEach(m=>{const md=data.filter(d=>d.mes===m);byMes[m]={inv:md.reduce((s,d)=>s+d.inv,0),msg:md.reduce((s,d)=>s+d.msg,0),sug:md.reduce((s,d)=>s+d.sug,0)};byMes[m].costo=byMes[m].msg>0?byMes[m].inv/byMes[m].msg:0;});
+// ---- POR MES ----
+function updateMes(){
+  const meses=getChecked('mf_meses');
+  const ase=document.getElementById('mf_ase').value;
+  const data=RAW.filter(d=>meses.includes(d.mes)&&(ase==='all'||d.asesor===ase));
 
-  const kpiEl=document.getElementById('kpiCompare');
-  kpiEl.innerHTML='';
-  MESES.forEach((m,i)=>{
-    const prev=i>0?byMes[MESES[i-1]]:null;
-    const deltaInv=prev&&prev.inv>0?((byMes[m].inv-prev.inv)/prev.inv*100):null;
-    const dc=deltaInv===null?'':deltaInv>=0?'delta-up':'delta-down';
-    const ds=deltaInv===null?'':deltaInv>=0?'▲':'▼';
-    kpiEl.innerHTML+=`<div class="kpi"><div class="kpi-label">Inversión ${cap(m)}</div><div class="kpi-value">$${fmt(byMes[m].inv)}</div>${deltaInv!==null?`<div class="kpi-delta ${dc}">${ds} ${Math.abs(deltaInv).toFixed(1)}% vs ${cap(MESES[i-1])}</div>`:'<div class="kpi-sub">Primer mes</div>'}</div>`;
+  const kpiEl=document.getElementById('m_kpis');kpiEl.innerHTML='';
+  meses.forEach(m=>{
+    const md=data.filter(d=>d.mes===m);
+    const inv=md.reduce((s,d)=>s+d.inv,0);
+    const msg=md.reduce((s,d)=>s+d.msg,0);
+    kpiEl.innerHTML+=`<div class="kpi"><div class="kpi-label">${cap(m)}</div><div class="kpi-value">$${fmt(inv)}</div><div class="kpi-sub">${fmt(msg)} msgs · $${fmt(msg>0?inv/msg:0)}/msg</div></div>`;
   });
 
-  const mesLabels=MESES.map(m=>cap(m));
-  const colors=MESES.map(m=>COLORES_MES[m]||'#888');
+  const byA={};
+  data.forEach(d=>{if(!byA[d.asesor])byA[d.asesor]={inv:0,wa:0,msg:0};byA[d.asesor].inv+=d.inv;byA[d.asesor].wa+=d.invWA;byA[d.asesor].msg+=d.msg;});
+  const aL=Object.keys(byA);
+  const sL=aL.map(a=>a.length>11?a.slice(0,11)+'…':a);
 
-  if(compInvC)compInvC.destroy();
-  compInvC=new Chart(document.getElementById('compInvChart'),{type:'bar',data:{labels:mesLabels,datasets:[{label:'Inversión',data:MESES.map(m=>byMes[m].inv),backgroundColor:colors,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
+  mkChart('m_bar',{type:'bar',data:{labels:sL,datasets:[
+    {label:'Inv. WA',data:aL.map(a=>byA[a].wa),backgroundColor:'#378ADD',borderRadius:3},
+    {label:'Real',data:aL.map(a=>byA[a].inv),backgroundColor:'#1D9E75',borderRadius:3}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}},y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
 
-  if(compMsgC)compMsgC.destroy();
-  compMsgC=new Chart(document.getElementById('compMsgChart'),{type:'bar',data:{labels:mesLabels,datasets:[{label:'Mensajes',data:MESES.map(m=>byMes[m].msg),backgroundColor:colors,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
+  mkChart('m_msg',{type:'bar',data:{labels:sL,datasets:[{label:'Msgs',data:aL.map(a=>byA[a].msg),backgroundColor:'#D4537E',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}}}}});
 
-  if(compCostoC)compCostoC.destroy();
-  compCostoC=new Chart(document.getElementById('compCostoChart'),{type:'line',data:{labels:mesLabels,datasets:[{label:'Costo/msg',data:MESES.map(m=>Math.round(byMes[m].costo)),borderColor:'#BA7517',backgroundColor:'rgba(186,117,23,0.1)',pointBackgroundColor:colors,tension:0.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
-
-  ['legendCompInv','legendCompMsg','legendCompCosto'].forEach(id=>{
-    document.getElementById(id).innerHTML=MESES.map(m=>`<span><span class="legend-dot" style="background:${COLORES_MES[m]}"></span>${cap(m)}</span>`).join('');
-  });
-
-  const tbody=document.getElementById('tableCompare');
-  tbody.innerHTML='';
+  const tb=document.getElementById('m_tbl');tb.innerHTML='';
   const aseFilt=ase==='all'?ASESORES:[ase];
-  aseFilt.forEach(a=>{
-    MESES.forEach(m=>{
-      const md=RAW.filter(d=>d.asesor===a&&d.mes===m);
-      if(!md.length)return;
-      const inv=md.reduce((s,d)=>s+d.inv,0);
-      const msg=md.reduce((s,d)=>s+d.msg,0);
-      const sug=md.reduce((s,d)=>s+d.sug,0);
-      const costo=msg>0?inv/msg:0;
-      const pct=sug>0?inv/sug*100:null;
-      const badge=pct===null?'<span class="badge badge-amber">Sin ref.</span>':pct>=100?'<span class="badge badge-green">'+pct.toFixed(0)+'%</span>':pct>=75?'<span class="badge badge-amber">'+pct.toFixed(0)+'%</span>':'<span class="badge badge-red">'+pct.toFixed(0)+'%</span>';
-      tbody.innerHTML+=`<tr><td><strong>${a}</strong></td><td><span class="badge badge-blue">${cap(m)}</span></td><td>$${fmt(inv)}</td><td>${fmt(msg)}</td><td>$${fmt(costo)}</td><td>${badge}</td></tr>`;
-    });
-  });
+  aseFilt.forEach(a=>{meses.forEach(m=>{
+    const md=RAW.filter(d=>d.asesor===a&&d.mes===m);
+    if(!md.length)return;
+    const inv=md.reduce((s,d)=>s+d.inv,0);const wa=md.reduce((s,d)=>s+d.invWA,0);const msg=md.reduce((s,d)=>s+d.msg,0);const sug=md.reduce((s,d)=>s+d.sug,0);
+    const p=sug>0?inv/sug*100:null;
+    tb.innerHTML+=`<tr><td><strong>${a}</strong></td><td><span class="badge badge-blue">${cap(m)}</span></td><td>$${fmt(inv)}</td><td>$${fmt(wa)}</td><td>${fmt(msg)}</td><td>$${fmt(msg>0?inv/msg:0)}</td><td>${bdg(p)}</td></tr>`;
+  });});
 }
 
-updateFilters();
+// ---- COMPARATIVA SEMANAL ----
+function updateCompSem(){
+  const sems=getChecked('cs_sems');
+  const ase=document.getElementById('cs_ase').value;
+  const data=RAW.filter(d=>sems.includes(d.label)&&(ase==='all'||d.asesor===ase));
+  const colors=sems.map((_,i)=>COL_SEM[i%COL_SEM.length]);
+
+  const bySem={};
+  sems.forEach(s=>{const sd=data.filter(d=>d.label===s);bySem[s]={inv:sd.reduce((t,d)=>t+d.inv,0),wa:sd.reduce((t,d)=>t+d.invWA,0),msg:sd.reduce((t,d)=>t+d.msg,0),mes:sd[0]?sd[0].mes:''};bySem[s].costo=bySem[s].msg>0?bySem[s].inv/bySem[s].msg:0;});
+
+  mkChart('cs_inv',{type:'bar',data:{labels:sems,datasets:[{label:'Inv',data:sems.map(s=>bySem[s].inv),backgroundColor:colors,borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}},y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
+
+  mkChart('cs_msg',{type:'bar',data:{labels:sems,datasets:[{label:'Msgs',data:sems.map(s=>bySem[s].msg),backgroundColor:'#D4537E',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}}}}});
+
+  mkChart('cs_costo',{type:'line',data:{labels:sems,datasets:[{label:'Costo',data:sems.map(s=>Math.round(bySem[s].costo)),borderColor:'#BA7517',backgroundColor:'rgba(186,117,23,0.1)',pointBackgroundColor:colors,tension:0.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
+
+  const tb=document.getElementById('cs_tbl');tb.innerHTML='';
+  sems.forEach(s=>{tb.innerHTML+=`<tr><td><strong>${s}</strong></td><td><span class="badge badge-blue">${cap(bySem[s].mes)}</span></td><td>$${fmt(bySem[s].inv)}</td><td>$${fmt(bySem[s].wa)}</td><td>${fmt(bySem[s].msg)}</td><td>$${fmt(bySem[s].costo)}</td></tr>`;});
+}
+
+// ---- COMPARATIVA MENSUAL ----
+function updateCompMes(){
+  const meses=getChecked('cm_meses');
+  const ase=document.getElementById('cm_ase').value;
+  const data=RAW.filter(d=>meses.includes(d.mes)&&(ase==='all'||d.asesor===ase));
+  const colors=meses.map(m=>COL_MES[m]||'#888');
+
+  const byMes={};
+  meses.forEach(m=>{const md=data.filter(d=>d.mes===m);byMes[m]={inv:md.reduce((s,d)=>s+d.inv,0),wa:md.reduce((s,d)=>s+d.invWA,0),msg:md.reduce((s,d)=>s+d.msg,0),sug:md.reduce((s,d)=>s+d.sug,0)};byMes[m].costo=byMes[m].msg>0?byMes[m].inv/byMes[m].msg:0;});
+
+  const kpiEl=document.getElementById('cm_kpis');kpiEl.innerHTML='';
+  meses.forEach((m,i)=>{
+    const prev=i>0?byMes[meses[i-1]]:null;
+    const delta=prev&&prev.inv>0?((byMes[m].inv-prev.inv)/prev.inv*100):null;
+    const dc=delta===null?'':delta>=0?'delta-up':'delta-down';
+    const ds=delta===null?'':delta>=0?'▲':'▼';
+    kpiEl.innerHTML+=`<div class="kpi"><div class="kpi-label">Inversión ${cap(m)}</div><div class="kpi-value">$${fmt(byMes[m].inv)}</div>${delta!==null?`<div class="kpi-delta ${dc}">${ds} ${Math.abs(delta).toFixed(1)}% vs ${cap(meses[i-1])}</div>`:'<div class="kpi-sub">Primer mes</div>'}</div>`;
+  });
+
+  mkChart('cm_inv',{type:'bar',data:{labels:meses.map(m=>cap(m)),datasets:[{label:'Inv',data:meses.map(m=>byMes[m].inv),backgroundColor:colors,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
+  mkChart('cm_msg',{type:'bar',data:{labels:meses.map(m=>cap(m)),datasets:[{label:'Msgs',data:meses.map(m=>byMes[m].msg),backgroundColor:colors,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
+  mkChart('cm_costo',{type:'line',data:{labels:meses.map(m=>cap(m)),datasets:[{label:'Costo',data:meses.map(m=>Math.round(byMes[m].costo)),borderColor:'#BA7517',backgroundColor:'rgba(186,117,23,0.1)',pointBackgroundColor:colors,tension:0.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
+
+  const tb=document.getElementById('cm_tbl');tb.innerHTML='';
+  const aseFilt=ase==='all'?ASESORES:[ase];
+  aseFilt.forEach(a=>{meses.forEach(m=>{
+    const md=RAW.filter(d=>d.asesor===a&&d.mes===m);
+    if(!md.length)return;
+    const inv=md.reduce((s,d)=>s+d.inv,0);const wa=md.reduce((s,d)=>s+d.invWA,0);const msg=md.reduce((s,d)=>s+d.msg,0);const sug=md.reduce((s,d)=>s+d.sug,0);
+    const p=sug>0?inv/sug*100:null;
+    tb.innerHTML+=`<tr><td><strong>${a}</strong></td><td><span class="badge badge-blue">${cap(m)}</span></td><td>$${fmt(inv)}</td><td>$${fmt(wa)}</td><td>${fmt(msg)}</td><td>$${fmt(msg>0?inv/msg:0)}</td><td>${bdg(p)}</td></tr>`;
+  });});
+}
+
+updateSemana();
 </script>
 </body>
 </html>
