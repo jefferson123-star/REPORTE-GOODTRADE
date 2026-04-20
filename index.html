@@ -66,7 +66,6 @@
     <button class="tab" onclick="setView('compare')">Comparativa mensual</button>
   </div>
 
-  <!-- VISTA DETALLE -->
   <div id="viewDetail">
     <div class="filter-row">
       <label>Mes:</label>
@@ -76,18 +75,15 @@
         <option value="abril">Abril</option>
       </select>
       <label>Semana:</label>
-      <select id="semFilter" onchange="update()">
-        <option value="all">Todas</option>
-      </select>
+      <select id="semFilter" onchange="update()"><option value="all">Todas</option></select>
       <label>Asesor:</label>
-      <select id="aseFilter" onchange="update()">
-        <option value="all">Todos</option>
-      </select>
+      <select id="aseFilter" onchange="update()"><option value="all">Todos</option></select>
     </div>
 
     <div class="kpi-grid">
       <div class="kpi"><div class="kpi-label">Inversión total</div><div class="kpi-value" id="kpi1">—</div><div class="kpi-sub">COP</div></div>
       <div class="kpi"><div class="kpi-label">Mensajes enviados</div><div class="kpi-value" id="kpi2">—</div><div class="kpi-sub">total WhatsApp</div></div>
+      <div class="kpi"><div class="kpi-label">Inversión por mensajes WA</div><div class="kpi-value" id="kpi5">—</div><div class="kpi-sub">COP invertido en WA</div></div>
       <div class="kpi"><div class="kpi-label">Costo promedio / msg</div><div class="kpi-value" id="kpi3">—</div><div class="kpi-sub">COP por mensaje</div></div>
       <div class="kpi"><div class="kpi-label">% ejecución budget</div><div class="kpi-value" id="kpi4">—</div><div class="kpi-sub">inversión / sugerida</div></div>
     </div>
@@ -124,31 +120,23 @@
     <div class="section-title">Detalle por asesor y semana</div>
     <div class="table-box">
       <table>
-        <thead>
-          <tr><th>Asesor</th><th>Mes</th><th>Semana</th><th>Inv. real</th><th>Mensajes</th><th>Costo / msg</th><th>% ejecución</th></tr>
-        </thead>
+        <thead><tr><th>Asesor</th><th>Mes</th><th>Semana</th><th>Inv. real</th><th>Mensajes</th><th>Costo / msg</th><th>% ejecución</th></tr></thead>
         <tbody id="tableBody"></tbody>
       </table>
     </div>
   </div>
 
-  <!-- VISTA COMPARATIVA -->
   <div id="viewCompare" style="display:none;">
     <div class="filter-row">
       <label>Asesor:</label>
-      <select id="aseFilterComp" onchange="updateCompare()">
-        <option value="all">Todos</option>
-      </select>
+      <select id="aseFilterComp" onchange="updateCompare()"><option value="all">Todos</option></select>
     </div>
-
     <div class="kpi-grid" id="kpiCompare"></div>
-
     <div class="chart-full">
       <h3>Inversión total por mes</h3>
       <div class="legend" id="legendCompInv"></div>
       <div style="position:relative;height:280px;"><canvas id="compInvChart"></canvas></div>
     </div>
-
     <div class="chart-row">
       <div class="chart-box">
         <h3>Mensajes por mes</h3>
@@ -161,13 +149,10 @@
         <div style="position:relative;height:240px;"><canvas id="compCostoChart"></canvas></div>
       </div>
     </div>
-
     <div class="section-title">Resumen por mes y asesor</div>
     <div class="table-box">
       <table>
-        <thead>
-          <tr><th>Asesor</th><th>Mes</th><th>Inv. total</th><th>Mensajes</th><th>Costo / msg</th><th>% ejec.</th></tr>
-        </thead>
+        <thead><tr><th>Asesor</th><th>Mes</th><th>Inv. total</th><th>Mensajes</th><th>Costo / msg</th><th>% ejec.</th></tr></thead>
         <tbody id="tableCompare"></tbody>
       </table>
     </div>
@@ -178,80 +163,79 @@
 
 <script>
 const RAW = [
-  {mes:"marzo",label:"2–8 Mar",asesor:"Goodtrade 1a Mayo",sug:50000,inv:50000,msg:91,costo:549.45},
-  {mes:"marzo",label:"9–15 Mar",asesor:"Goodtrade 1a Mayo",sug:50000,inv:50000,msg:87,costo:574.71},
-  {mes:"marzo",label:"16–22 Mar",asesor:"Goodtrade 1a Mayo",sug:50000,inv:50000,msg:97,costo:515.46},
-  {mes:"marzo",label:"23–29 Mar",asesor:"Goodtrade 1a Mayo",sug:100000,inv:100000,msg:143,costo:565.93},
-  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Goodtrade 1a Mayo",sug:100000,inv:100000,msg:98,costo:732.08},
-  {mes:"abril",label:"6–12 Abr",asesor:"Goodtrade 1a Mayo",sug:100000,inv:100000,msg:123,costo:515.93},
-  {mes:"abril",label:"13–19 Abr",asesor:"Goodtrade 1a Mayo",sug:100000,inv:100000,msg:125,costo:575.28},
-  {mes:"marzo",label:"2–8 Mar",asesor:"Punto 80",sug:50000,inv:50000,msg:57,costo:823.42},
-  {mes:"marzo",label:"9–15 Mar",asesor:"Punto 80",sug:50000,inv:50000,msg:86,costo:581.34},
-  {mes:"marzo",label:"16–22 Mar",asesor:"Punto 80",sug:50000,inv:50000,msg:85,costo:588.24},
-  {mes:"marzo",label:"23–29 Mar",asesor:"Punto 80",sug:100000,inv:100000,msg:157,costo:636.94},
-  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Punto 80",sug:100000,inv:100000,msg:120,costo:833.33},
-  {mes:"abril",label:"6–12 Abr",asesor:"Punto 80",sug:100000,inv:100000,msg:121,costo:826.36},
-  {mes:"abril",label:"13–19 Abr",asesor:"Punto 80",sug:100000,inv:100000,msg:151,costo:662.25},
-  {mes:"marzo",label:"2–8 Mar",asesor:"Goodtrade C. Jardín",sug:50000,inv:50000,msg:54,costo:924.07},
-  {mes:"marzo",label:"9–15 Mar",asesor:"Goodtrade C. Jardín",sug:50000,inv:50000,msg:74,costo:675.59},
-  {mes:"marzo",label:"16–22 Mar",asesor:"Goodtrade C. Jardín",sug:50000,inv:50000,msg:50,costo:1000},
-  {mes:"marzo",label:"23–29 Mar",asesor:"Goodtrade C. Jardín",sug:100000,inv:100000,msg:136,costo:744.64},
-  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Goodtrade C. Jardín",sug:100000,inv:100000,msg:108,costo:905.14},
-  {mes:"abril",label:"6–12 Abr",asesor:"Goodtrade C. Jardín",sug:100000,inv:100000,msg:121,costo:696.61},
-  {mes:"abril",label:"13–19 Abr",asesor:"Goodtrade C. Jardín",sug:100000,inv:100000,msg:134,costo:870.57},
-  {mes:"marzo",label:"2–8 Mar",asesor:"Goodtrade Sta. Lucía",sug:50000,inv:50000,msg:51,costo:927.43},
-  {mes:"marzo",label:"9–15 Mar",asesor:"Goodtrade Sta. Lucía",sug:50000,inv:50000,msg:75,costo:667.88},
-  {mes:"marzo",label:"16–22 Mar",asesor:"Goodtrade Sta. Lucía",sug:50000,inv:50000,msg:79,costo:631.72},
-  {mes:"marzo",label:"23–29 Mar",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:100000,msg:115,costo:877.90},
-  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:100000,msg:104,costo:1042.20},
-  {mes:"abril",label:"6–12 Abr",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:100000,msg:73,costo:1368.49},
-  {mes:"abril",label:"13–19 Abr",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:100000,msg:159,costo:628.93},
-  {mes:"marzo",label:"2–8 Mar",asesor:"Sebastian",sug:50000,inv:50000,msg:117,costo:404.83},
-  {mes:"marzo",label:"9–15 Mar",asesor:"Sebastian",sug:50000,inv:50000,msg:132,costo:38.14},
-  {mes:"marzo",label:"16–22 Mar",asesor:"Sebastian",sug:50000,inv:50000,msg:89,costo:561.80},
-  {mes:"marzo",label:"23–29 Mar",asesor:"Sebastian",sug:100000,inv:100000,msg:225,costo:431.05},
-  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Sebastian",sug:100000,inv:100000,msg:171,costo:495.87},
-  {mes:"abril",label:"6–12 Abr",asesor:"Sebastian",sug:100000,inv:100000,msg:175,costo:474.85},
-  {mes:"abril",label:"13–19 Abr",asesor:"Sebastian",sug:100000,inv:100000,msg:199,costo:703.47},
-  {mes:"marzo",label:"2–8 Mar",asesor:"Juan Camilo",sug:50000,inv:50000,msg:111,costo:438.34},
-  {mes:"marzo",label:"9–15 Mar",asesor:"Juan Camilo",sug:50000,inv:50000,msg:87,costo:574.59},
-  {mes:"marzo",label:"16–22 Mar",asesor:"Juan Camilo",sug:50000,inv:50000,msg:53,costo:943.40},
-  {mes:"marzo",label:"23–29 Mar",asesor:"Juan Camilo",sug:100000,inv:100000,msg:221,costo:456.83},
-  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Juan Camilo",sug:100000,inv:100000,msg:171,costo:495.87},
-  {mes:"abril",label:"6–12 Abr",asesor:"Juan Camilo",sug:100000,inv:100000,msg:212,costo:557.64},
-  {mes:"abril",label:"13–19 Abr",asesor:"Juan Camilo",sug:100000,inv:100000,msg:217,costo:504.29},
-  {mes:"marzo",label:"2–8 Mar",asesor:"Andrea",sug:50000,inv:50000,msg:160,costo:416.12},
-  {mes:"marzo",label:"9–15 Mar",asesor:"Andrea",sug:50000,inv:50000,msg:142,costo:479.17},
-  {mes:"marzo",label:"16–22 Mar",asesor:"Andrea",sug:50000,inv:50000,msg:96,costo:692.68},
-  {mes:"marzo",label:"23–29 Mar",asesor:"Andrea",sug:100000,inv:100000,msg:221,costo:542.99},
-  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Andrea",sug:100000,inv:100000,msg:289,costo:444.05},
-  {mes:"abril",label:"6–12 Abr",asesor:"Andrea",sug:100000,inv:100000,msg:259,costo:528.11},
-  {mes:"abril",label:"13–19 Abr",asesor:"Andrea",sug:100000,inv:100000,msg:54,costo:1218.17},
-  {mes:"marzo",label:"2–8 Mar",asesor:"Christian",sug:50000,inv:50000,msg:81,costo:605.88},
-  {mes:"marzo",label:"9–15 Mar",asesor:"Christian",sug:50000,inv:50000,msg:73,costo:684.93},
-  {mes:"marzo",label:"16–22 Mar",asesor:"Christian",sug:50000,inv:50000,msg:93,costo:537.63},
-  {mes:"marzo",label:"23–29 Mar",asesor:"Christian",sug:100000,inv:100000,msg:153,costo:519.46},
-  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Christian",sug:100000,inv:100000,msg:155,costo:475.49},
-  {mes:"abril",label:"6–12 Abr",asesor:"Christian",sug:100000,inv:100000,msg:148,costo:440.65},
-  {mes:"abril",label:"13–19 Abr",asesor:"Christian",sug:100000,inv:100000,msg:221,costo:685.40},
-  {mes:"marzo",label:"2–8 Mar",asesor:"Kommo",sug:0,inv:0,msg:595,costo:586.37},
-  {mes:"marzo",label:"9–15 Mar",asesor:"Kommo",sug:0,inv:0,msg:575,costo:524.04},
-  {mes:"marzo",label:"16–22 Mar",asesor:"Kommo",sug:0,inv:0,msg:511,costo:591.73},
-  {mes:"marzo",label:"23–29 Mar",asesor:"Kommo",sug:1800000,inv:1800000,msg:743,costo:647.57},
-  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Kommo",sug:1800000,inv:0,msg:903,costo:832.78},
-  {mes:"abril",label:"6–12 Abr",asesor:"Kommo",sug:0,inv:0,msg:678,costo:752.29},
-  {mes:"abril",label:"13–19 Abr",asesor:"Kommo",sug:0,inv:0,msg:515,costo:576.81},
+  {mes:"marzo",label:"2–8 Mar",asesor:"Goodtrade 1a Mayo",sug:50000,inv:50000,invWA:50000,msg:91,costo:549.45},
+  {mes:"marzo",label:"9–15 Mar",asesor:"Goodtrade 1a Mayo",sug:50000,inv:50000,invWA:50000,msg:87,costo:574.71},
+  {mes:"marzo",label:"16–22 Mar",asesor:"Goodtrade 1a Mayo",sug:50000,inv:50000,invWA:50000,msg:97,costo:515.46},
+  {mes:"marzo",label:"23–29 Mar",asesor:"Goodtrade 1a Mayo",sug:100000,inv:100000,invWA:80928,msg:143,costo:565.93},
+  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Goodtrade 1a Mayo",sug:100000,inv:100000,invWA:71744,msg:98,costo:732.08},
+  {mes:"abril",label:"6–12 Abr",asesor:"Goodtrade 1a Mayo",sug:100000,inv:100000,invWA:63460,msg:123,costo:515.93},
+  {mes:"abril",label:"13–19 Abr",asesor:"Goodtrade 1a Mayo",sug:100000,inv:100000,invWA:71910,msg:125,costo:575.28},
+  {mes:"marzo",label:"2–8 Mar",asesor:"Punto 80",sug:50000,inv:50000,invWA:46935,msg:57,costo:823.42},
+  {mes:"marzo",label:"9–15 Mar",asesor:"Punto 80",sug:50000,inv:50000,invWA:49995,msg:86,costo:581.34},
+  {mes:"marzo",label:"16–22 Mar",asesor:"Punto 80",sug:50000,inv:50000,invWA:50000,msg:85,costo:588.24},
+  {mes:"marzo",label:"23–29 Mar",asesor:"Punto 80",sug:100000,inv:100000,invWA:100000,msg:157,costo:636.94},
+  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Punto 80",sug:100000,inv:100000,invWA:100000,msg:120,costo:833.33},
+  {mes:"abril",label:"6–12 Abr",asesor:"Punto 80",sug:100000,inv:100000,invWA:99989,msg:121,costo:826.36},
+  {mes:"abril",label:"13–19 Abr",asesor:"Punto 80",sug:100000,inv:100000,invWA:100000,msg:151,costo:662.25},
+  {mes:"marzo",label:"2–8 Mar",asesor:"Goodtrade C. Jardín",sug:50000,inv:50000,invWA:49900,msg:54,costo:924.07},
+  {mes:"marzo",label:"9–15 Mar",asesor:"Goodtrade C. Jardín",sug:50000,inv:50000,invWA:49994,msg:74,costo:675.59},
+  {mes:"marzo",label:"16–22 Mar",asesor:"Goodtrade C. Jardín",sug:50000,inv:50000,invWA:50000,msg:50,costo:1000},
+  {mes:"marzo",label:"23–29 Mar",asesor:"Goodtrade C. Jardín",sug:100000,inv:100000,invWA:101271,msg:136,costo:744.64},
+  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Goodtrade C. Jardín",sug:100000,inv:100000,invWA:97755,msg:108,costo:905.14},
+  {mes:"abril",label:"6–12 Abr",asesor:"Goodtrade C. Jardín",sug:100000,inv:100000,invWA:84290,msg:121,costo:696.61},
+  {mes:"abril",label:"13–19 Abr",asesor:"Goodtrade C. Jardín",sug:100000,inv:100000,invWA:116656,msg:134,costo:870.57},
+  {mes:"marzo",label:"2–8 Mar",asesor:"Goodtrade Sta. Lucía",sug:50000,inv:50000,invWA:47299,msg:51,costo:927.43},
+  {mes:"marzo",label:"9–15 Mar",asesor:"Goodtrade Sta. Lucía",sug:50000,inv:50000,invWA:50091,msg:75,costo:667.88},
+  {mes:"marzo",label:"16–22 Mar",asesor:"Goodtrade Sta. Lucía",sug:50000,inv:50000,invWA:49906,msg:79,costo:631.72},
+  {mes:"marzo",label:"23–29 Mar",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:100000,invWA:100959,msg:115,costo:877.90},
+  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:100000,invWA:108389,msg:104,costo:1042.20},
+  {mes:"abril",label:"6–12 Abr",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:100000,invWA:99900,msg:73,costo:1368.49},
+  {mes:"abril",label:"13–19 Abr",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:100000,invWA:100000,msg:159,costo:628.93},
+  {mes:"marzo",label:"2–8 Mar",asesor:"Sebastian",sug:50000,inv:50000,invWA:47365,msg:117,costo:404.83},
+  {mes:"marzo",label:"9–15 Mar",asesor:"Sebastian",sug:50000,inv:50000,invWA:5035,msg:132,costo:38.14},
+  {mes:"marzo",label:"16–22 Mar",asesor:"Sebastian",sug:50000,inv:50000,invWA:50000,msg:89,costo:561.80},
+  {mes:"marzo",label:"23–29 Mar",asesor:"Sebastian",sug:100000,inv:100000,invWA:96987,msg:225,costo:431.05},
+  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Sebastian",sug:100000,inv:100000,invWA:84794,msg:171,costo:495.87},
+  {mes:"abril",label:"6–12 Abr",asesor:"Sebastian",sug:100000,inv:100000,invWA:83098,msg:175,costo:474.85},
+  {mes:"abril",label:"13–19 Abr",asesor:"Sebastian",sug:100000,inv:100000,invWA:139991,msg:199,costo:703.47},
+  {mes:"marzo",label:"2–8 Mar",asesor:"Juan Camilo",sug:50000,inv:50000,invWA:48656,msg:111,costo:438.34},
+  {mes:"marzo",label:"9–15 Mar",asesor:"Juan Camilo",sug:50000,inv:50000,invWA:49989,msg:87,costo:574.59},
+  {mes:"marzo",label:"16–22 Mar",asesor:"Juan Camilo",sug:50000,inv:50000,invWA:50000,msg:53,costo:943.40},
+  {mes:"marzo",label:"23–29 Mar",asesor:"Juan Camilo",sug:100000,inv:100000,invWA:100959,msg:221,costo:456.83},
+  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Juan Camilo",sug:100000,inv:100000,invWA:84794,msg:171,costo:495.87},
+  {mes:"abril",label:"6–12 Abr",asesor:"Juan Camilo",sug:100000,inv:100000,invWA:118219,msg:212,costo:557.64},
+  {mes:"abril",label:"13–19 Abr",asesor:"Juan Camilo",sug:100000,inv:100000,invWA:109432,msg:217,costo:504.29},
+  {mes:"marzo",label:"2–8 Mar",asesor:"Andrea",sug:50000,inv:50000,invWA:66579,msg:160,costo:416.12},
+  {mes:"marzo",label:"9–15 Mar",asesor:"Andrea",sug:50000,inv:50000,invWA:68042,msg:142,costo:479.17},
+  {mes:"marzo",label:"16–22 Mar",asesor:"Andrea",sug:50000,inv:50000,invWA:66497,msg:96,costo:692.68},
+  {mes:"marzo",label:"23–29 Mar",asesor:"Andrea",sug:100000,inv:100000,invWA:120000,msg:221,costo:542.99},
+  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Andrea",sug:100000,inv:100000,invWA:128330,msg:289,costo:444.05},
+  {mes:"abril",label:"6–12 Abr",asesor:"Andrea",sug:100000,inv:100000,invWA:136781,msg:259,costo:528.11},
+  {mes:"abril",label:"13–19 Abr",asesor:"Andrea",sug:100000,inv:100000,invWA:65781,msg:54,costo:1218.17},
+  {mes:"marzo",label:"2–8 Mar",asesor:"Christian",sug:50000,inv:50000,invWA:49076,msg:81,costo:605.88},
+  {mes:"marzo",label:"9–15 Mar",asesor:"Christian",sug:50000,inv:50000,invWA:50000,msg:73,costo:684.93},
+  {mes:"marzo",label:"16–22 Mar",asesor:"Christian",sug:50000,inv:50000,invWA:50000,msg:93,costo:537.63},
+  {mes:"marzo",label:"23–29 Mar",asesor:"Christian",sug:100000,inv:100000,invWA:79477,msg:153,costo:519.46},
+  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Christian",sug:100000,inv:100000,invWA:73701,msg:155,costo:475.49},
+  {mes:"abril",label:"6–12 Abr",asesor:"Christian",sug:100000,inv:100000,invWA:65216,msg:148,costo:440.65},
+  {mes:"abril",label:"13–19 Abr",asesor:"Christian",sug:100000,inv:100000,invWA:151474,msg:221,costo:685.40},
+  {mes:"marzo",label:"2–8 Mar",asesor:"Kommo",sug:0,inv:348893,invWA:348893,msg:595,costo:586.37},
+  {mes:"marzo",label:"9–15 Mar",asesor:"Kommo",sug:0,inv:301323,invWA:301323,msg:575,costo:524.04},
+  {mes:"marzo",label:"16–22 Mar",asesor:"Kommo",sug:0,inv:302373,invWA:302373,msg:511,costo:591.73},
+  {mes:"marzo",label:"23–29 Mar",asesor:"Kommo",sug:1800000,inv:481144,invWA:481144,msg:743,costo:647.57},
+  {mes:"abril",label:"30 Mar–5 Abr",asesor:"Kommo",sug:1800000,inv:752000,invWA:752000,msg:903,costo:832.78},
+  {mes:"abril",label:"6–12 Abr",asesor:"Kommo",sug:0,inv:510056,invWA:510056,msg:678,costo:752.29},
+  {mes:"abril",label:"13–19 Abr",asesor:"Kommo",sug:0,inv:297057,invWA:297057,msg:515,costo:576.81},
 ];
 
-const MESES = ["marzo","abril"];
-const ASESORES = [...new Set(RAW.map(d=>d.asesor))];
-const COLORES_MES = {marzo:'#378ADD', abril:'#1D9E75', mayo:'#D4537E', junio:'#BA7517'};
+const MESES=["marzo","abril"];
+const ASESORES=[...new Set(RAW.map(d=>d.asesor))];
+const COLORES_MES={marzo:'#378ADD',abril:'#1D9E75',mayo:'#D4537E',junio:'#BA7517'};
+function fmt(n){return Math.round(n).toLocaleString('es-CO');}
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1);}
 
-function fmt(n){ return Math.round(n).toLocaleString('es-CO'); }
-function cap(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
-
-[document.getElementById('aseFilter'), document.getElementById('aseFilterComp')].forEach(sel=>{
-  ASESORES.forEach(a=>{ const o=document.createElement('option');o.value=a;o.textContent=a;sel.appendChild(o); });
+[document.getElementById('aseFilter'),document.getElementById('aseFilterComp')].forEach(sel=>{
+  ASESORES.forEach(a=>{const o=document.createElement('option');o.value=a;o.textContent=a;sel.appendChild(o);});
 });
 
 let barC,msgC,costoC,lineC,compInvC,compMsgC,compCostoC;
@@ -268,7 +252,7 @@ function updateFilters(){
   const sems=[...new Set(RAW.filter(d=>mes==='all'||d.mes===mes).map(d=>d.label))];
   const semSel=document.getElementById('semFilter');
   semSel.innerHTML='<option value="all">Todas</option>';
-  sems.forEach(s=>{ const o=document.createElement('option');o.value=s;o.textContent=s;semSel.appendChild(o); });
+  sems.forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=s;semSel.appendChild(o);});
   update();
 }
 
@@ -286,39 +270,34 @@ function update(){
   const totalMsg=data.reduce((s,d)=>s+d.msg,0);
   const avgCosto=totalMsg>0?totalInv/totalMsg:0;
   const pctExec=totalSug>0?(totalInv/totalSug*100):0;
-
+  const totalInvWA=data.reduce((s,d)=>s+(d.invWA||0),0);
   document.getElementById('kpi1').textContent='$'+fmt(totalInv);
   document.getElementById('kpi2').textContent=fmt(totalMsg);
+  document.getElementById('kpi5').textContent='$'+fmt(totalInvWA);
   document.getElementById('kpi3').textContent='$'+fmt(avgCosto);
   document.getElementById('kpi4').textContent=pctExec.toFixed(1)+'%';
 
   const byAse={};
-  data.forEach(d=>{ if(!byAse[d.asesor]) byAse[d.asesor]={sug:0,inv:0,msg:0}; byAse[d.asesor].sug+=d.sug; byAse[d.asesor].inv+=d.inv; byAse[d.asesor].msg+=d.msg; });
+  data.forEach(d=>{if(!byAse[d.asesor])byAse[d.asesor]={sug:0,inv:0,msg:0};byAse[d.asesor].sug+=d.sug;byAse[d.asesor].inv+=d.inv;byAse[d.asesor].msg+=d.msg;});
   const aseLabels=Object.keys(byAse);
   const shortL=aseLabels.map(a=>a.length>11?a.slice(0,11)+'…':a);
 
-  if(barC) barC.destroy();
+  if(barC)barC.destroy();
   barC=new Chart(document.getElementById('barChart'),{type:'bar',data:{labels:shortL,datasets:[
     {label:'Sugerida',data:aseLabels.map(a=>byAse[a].sug),backgroundColor:'#378ADD',borderRadius:3},
     {label:'Real',data:aseLabels.map(a=>byAse[a].inv),backgroundColor:'#1D9E75',borderRadius:3}
   ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}},y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
 
-  if(msgC) msgC.destroy();
-  msgC=new Chart(document.getElementById('msgChart'),{type:'bar',data:{labels:shortL,datasets:[
-    {label:'Mensajes',data:aseLabels.map(a=>byAse[a].msg),backgroundColor:'#D4537E',borderRadius:3}
-  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}}}}});
+  if(msgC)msgC.destroy();
+  msgC=new Chart(document.getElementById('msgChart'),{type:'bar',data:{labels:shortL,datasets:[{label:'Mensajes',data:aseLabels.map(a=>byAse[a].msg),backgroundColor:'#D4537E',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}}}}});
 
-  if(costoC) costoC.destroy();
-  costoC=new Chart(document.getElementById('costoChart'),{type:'bar',data:{labels:shortL,datasets:[
-    {label:'Costo/msg',data:aseLabels.map(a=>byAse[a].msg>0?Math.round(byAse[a].inv/byAse[a].msg):0),backgroundColor:'#BA7517',borderRadius:3}
-  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}},y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
+  if(costoC)costoC.destroy();
+  costoC=new Chart(document.getElementById('costoChart'),{type:'bar',data:{labels:shortL,datasets:[{label:'Costo/msg',data:aseLabels.map(a=>byAse[a].msg>0?Math.round(byAse[a].inv/byAse[a].msg):0),backgroundColor:'#BA7517',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:11},autoSkip:false,maxRotation:45}},y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
 
   const sems=[...new Set(data.map(d=>d.label))];
   const lineVals=sems.map(s=>data.filter(d=>d.label===s).reduce((t,d)=>t+d.inv,0));
-  if(lineC) lineC.destroy();
-  lineC=new Chart(document.getElementById('lineChart'),{type:'line',data:{labels:sems,datasets:[
-    {label:'Inversión',data:lineVals,borderColor:'#7F77DD',backgroundColor:'rgba(127,119,221,0.1)',pointBackgroundColor:'#7F77DD',tension:0.3,fill:true}
-  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
+  if(lineC)lineC.destroy();
+  lineC=new Chart(document.getElementById('lineChart'),{type:'line',data:{labels:sems,datasets:[{label:'Inversión',data:lineVals,borderColor:'#7F77DD',backgroundColor:'rgba(127,119,221,0.1)',pointBackgroundColor:'#7F77DD',tension:0.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
 
   const tbody=document.getElementById('tableBody');
   tbody.innerHTML='';
@@ -333,7 +312,7 @@ function updateCompare(){
   const ase=document.getElementById('aseFilterComp').value;
   const data=RAW.filter(d=>ase==='all'||d.asesor===ase);
   const byMes={};
-  MESES.forEach(m=>{ const md=data.filter(d=>d.mes===m); byMes[m]={inv:md.reduce((s,d)=>s+d.inv,0),msg:md.reduce((s,d)=>s+d.msg,0),sug:md.reduce((s,d)=>s+d.sug,0)}; byMes[m].costo=byMes[m].msg>0?byMes[m].inv/byMes[m].msg:0; });
+  MESES.forEach(m=>{const md=data.filter(d=>d.mes===m);byMes[m]={inv:md.reduce((s,d)=>s+d.inv,0),msg:md.reduce((s,d)=>s+d.msg,0),sug:md.reduce((s,d)=>s+d.sug,0)};byMes[m].costo=byMes[m].msg>0?byMes[m].inv/byMes[m].msg:0;});
 
   const kpiEl=document.getElementById('kpiCompare');
   kpiEl.innerHTML='';
@@ -348,13 +327,13 @@ function updateCompare(){
   const mesLabels=MESES.map(m=>cap(m));
   const colors=MESES.map(m=>COLORES_MES[m]||'#888');
 
-  if(compInvC) compInvC.destroy();
+  if(compInvC)compInvC.destroy();
   compInvC=new Chart(document.getElementById('compInvChart'),{type:'bar',data:{labels:mesLabels,datasets:[{label:'Inversión',data:MESES.map(m=>byMes[m].inv),backgroundColor:colors,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
 
-  if(compMsgC) compMsgC.destroy();
+  if(compMsgC)compMsgC.destroy();
   compMsgC=new Chart(document.getElementById('compMsgChart'),{type:'bar',data:{labels:mesLabels,datasets:[{label:'Mensajes',data:MESES.map(m=>byMes[m].msg),backgroundColor:colors,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
 
-  if(compCostoC) compCostoC.destroy();
+  if(compCostoC)compCostoC.destroy();
   compCostoC=new Chart(document.getElementById('compCostoChart'),{type:'line',data:{labels:mesLabels,datasets:[{label:'Costo/msg',data:MESES.map(m=>Math.round(byMes[m].costo)),borderColor:'#BA7517',backgroundColor:'rgba(186,117,23,0.1)',pointBackgroundColor:colors,tension:0.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+fmt(v)}}}}});
 
   ['legendCompInv','legendCompMsg','legendCompCosto'].forEach(id=>{
@@ -365,9 +344,9 @@ function updateCompare(){
   tbody.innerHTML='';
   const aseFilt=ase==='all'?ASESORES:[ase];
   aseFilt.forEach(a=>{
-    MESES.forEach((m,i)=>{
+    MESES.forEach(m=>{
       const md=RAW.filter(d=>d.asesor===a&&d.mes===m);
-      if(!md.length) return;
+      if(!md.length)return;
       const inv=md.reduce((s,d)=>s+d.inv,0);
       const msg=md.reduce((s,d)=>s+d.msg,0);
       const sug=md.reduce((s,d)=>s+d.sug,0);
