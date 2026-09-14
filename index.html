@@ -67,7 +67,7 @@
 <div class="dash">
   <div class="header">
     <h1>Reporte Oficial — Goodtrade</h1>
-    <p>2 Marzo – 30 Agosto 2026 &nbsp;·&nbsp; 10 asesores / tiendas</p>
+    <p>2 Marzo – 13 Septiembre 2026 &nbsp;·&nbsp; 10 asesores / tiendas</p>
   </div>
 
   <div class="tabs">
@@ -168,7 +168,7 @@
     <div class="table-box"><table><thead><tr><th>Asesor</th><th>Mes</th><th>Inv. total</th><th>Inv. WA</th><th>Mensajes</th><th>Costo/msg</th><th>% inv. WA</th></tr></thead><tbody id="cm_tbl"></tbody></table></div>
   </div>
 
-  <div class="footer">Reporte Oficial Goodtrade · 2 Marzo – 30 Agosto 2026</div>
+  <div class="footer">Reporte Oficial Goodtrade · 2 Marzo – 13 Septiembre 2026</div>
 </div>
 
 <script>
@@ -432,6 +432,28 @@ const RAW = [
   {mes:"agosto",label:"24–30 Ago",asesor:"Christian",sug:100000,inv:100000,invWA:100002,msg:107,costo:934.60},
   {mes:"agosto",label:"24–30 Ago",asesor:"Fernando",sug:100000,inv:100000,invWA:76303,msg:83,costo:919.31},
   {mes:"agosto",label:"24–30 Ago",asesor:"Kommo",sug:0,inv:483679,invWA:483679,msg:1204,costo:401.73},
+  // 31 AGO - 6 SEP
+  {mes:"septiembre",label:"31 Ago–6 Sep",asesor:"Goodtrade 1a Mayo",sug:100000,inv:100000,invWA:140000,msg:140,costo:1000.00},
+  {mes:"septiembre",label:"31 Ago–6 Sep",asesor:"Punto 80",sug:100000,inv:100000,invWA:66773,msg:103,costo:648.28},
+  {mes:"septiembre",label:"31 Ago–6 Sep",asesor:"Goodtrade C. Jardín",sug:100000,inv:100000,invWA:106472,msg:114,costo:933.96},
+  {mes:"septiembre",label:"31 Ago–6 Sep",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:100000,invWA:93312,msg:108,costo:864.00},
+  {mes:"septiembre",label:"31 Ago–6 Sep",asesor:"Sebastian",sug:100000,inv:100000,invWA:100000,msg:149,costo:671.14},
+  {mes:"septiembre",label:"31 Ago–6 Sep",asesor:"Juan Camilo",sug:100000,inv:100000,invWA:155996,msg:207,costo:753.60},
+  {mes:"septiembre",label:"31 Ago–6 Sep",asesor:"Andrea",sug:100000,inv:100000,invWA:48830,msg:63,costo:775.08},
+  {mes:"septiembre",label:"31 Ago–6 Sep",asesor:"Christian",sug:100000,inv:100000,invWA:99998,msg:95,costo:1052.61},
+  {mes:"septiembre",label:"31 Ago–6 Sep",asesor:"Fernando",sug:100000,inv:100000,invWA:77005,msg:89,costo:865.22},
+  {mes:"septiembre",label:"31 Ago–6 Sep",asesor:"Kommo",sug:0,inv:532385,invWA:532385,msg:1069,costo:498.02},
+  // 7 - 13 SEP
+  {mes:"septiembre",label:"7–13 Sep",asesor:"Goodtrade 1a Mayo",sug:100000,inv:100000,invWA:120000,msg:105,costo:1142.86},
+  {mes:"septiembre",label:"7–13 Sep",asesor:"Punto 80",sug:100000,inv:100000,invWA:79000,msg:101,costo:782.18},
+  {mes:"septiembre",label:"7–13 Sep",asesor:"Goodtrade C. Jardín",sug:100000,inv:100000,invWA:100003,msg:111,costo:900.93},
+  {mes:"septiembre",label:"7–13 Sep",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:100000,invWA:97907,msg:90,costo:1087.86},
+  {mes:"septiembre",label:"7–13 Sep",asesor:"Sebastian",sug:100000,inv:100000,invWA:100000,msg:131,costo:763.36},
+  {mes:"septiembre",label:"7–13 Sep",asesor:"Juan Camilo",sug:100000,inv:100000,invWA:93003,msg:130,costo:715.41},
+  {mes:"septiembre",label:"7–13 Sep",asesor:"Andrea",sug:100000,inv:100000,invWA:182284,msg:178,costo:1024.07},
+  {mes:"septiembre",label:"7–13 Sep",asesor:"Christian",sug:100000,inv:100000,invWA:102264,msg:94,costo:1087.91},
+  {mes:"septiembre",label:"7–13 Sep",asesor:"Fernando",sug:100000,inv:100000,invWA:76843,msg:84,costo:914.80},
+  {mes:"septiembre",label:"7–13 Sep",asesor:"Kommo",sug:0,inv:544297,invWA:544297,msg:1019,costo:534.15},
   // FERNANDO
   {mes:"junio",label:"29 Jun–4 Jul",asesor:"Fernando",sug:50000,inv:50000,invWA:50000,msg:84,costo:595.24},
   {mes:"julio",label:"5–12 Jul",asesor:"Fernando",sug:50000,inv:50000,invWA:50000,msg:123,costo:406.50},
@@ -439,10 +461,10 @@ const RAW = [
   {mes:"julio",label:"20–26 Jul",asesor:"Fernando",sug:58757,inv:58757,invWA:58757,msg:84,costo:699.49},
 ];
 
-const MESES=["marzo","abril","mayo","junio","julio","agosto"];
+const MESES=["marzo","abril","mayo","junio","julio","agosto","septiembre"];
 const ASESORES=[...new Set(RAW.map(d=>d.asesor))];
 const SEMANAS=[...new Set(RAW.map(d=>d.label))];
-const COL_MES={marzo:'#003863',abril:'#D61016',mayo:'#0F7B6C',junio:'#7B3F91',julio:'#BA7517',agosto:'#1D5FAA'};
+const COL_MES={marzo:'#003863',abril:'#D61016',mayo:'#0F7B6C',junio:'#7B3F91',julio:'#BA7517',agosto:'#1D5FAA',septiembre:'#C0392B'};
 const COL_SEM=['#003863','#D61016','#0F7B6C','#BA7517','#7F77DD','#534AB7','#993556','#2E86AB','#4A90D9'];
 
 function fmt(n){return Math.round(n).toLocaleString('es-CO');}
