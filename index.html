@@ -67,7 +67,7 @@
 <div class="dash">
   <div class="header">
     <h1>Reporte Oficial — Goodtrade</h1>
-    <p>2 Marzo – 20 Septiembre 2026 &nbsp;·&nbsp; 10 asesores / tiendas</p>
+    <p>2 Marzo – 11 Octubre 2026 &nbsp;·&nbsp; 10 asesores / tiendas</p>
   </div>
 
   <div class="tabs">
@@ -108,7 +108,7 @@
   <div id="viewMes" style="display:none;">
     <div class="filter-row">
       <label>Mes:</label>
-      <div class="checkbox-group" id="mf_meses"></div>
+      <select id="mf_meses" onchange="updateMes()"><option value="all">Todos los meses</option></select>
       <label>Asesor:</label>
       <select id="mf_ase" onchange="updateMes()"><option value="all">Todos</option></select>
     </div>
@@ -146,7 +146,7 @@
 
   <!-- COMPARATIVA MENSUAL -->
   <div id="viewCompMes" style="display:none;">
-    <div class="filter-row"><label>Meses:</label><div class="checkbox-group" id="cm_meses"></div></div>
+    <div class="filter-row"><label>Mes:</label><select id="cm_meses" onchange="updateComparativaMes()"><option value="all">Todos los meses</option></select></div>
     <div class="filter-row" style="flex-wrap:wrap;gap:16px;">
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
         <label>Comparar:</label>
@@ -168,7 +168,7 @@
     <div class="table-box"><table><thead><tr><th>Asesor</th><th>Mes</th><th>Inv. total</th><th>Inv. WA</th><th>Mensajes</th><th>Costo/msg</th><th>% inv. WA</th></tr></thead><tbody id="cm_tbl"></tbody></table></div>
   </div>
 
-  <div class="footer">Reporte Oficial Goodtrade · 2 Marzo – 20 Septiembre 2026</div>
+  <div class="footer">Reporte Oficial Goodtrade · 2 Marzo – 11 Octubre 2026</div>
 </div>
 
 <script>
@@ -465,6 +465,43 @@ const RAW = [
   {mes:"septiembre",label:"14–20 Sep",asesor:"Christian",sug:100000,inv:100000,invWA:97371,msg:79,costo:1232.54},
   {mes:"septiembre",label:"14–20 Sep",asesor:"Fernando",sug:100000,inv:100000,invWA:89000,msg:75,costo:1186.67},
   {mes:"septiembre",label:"14–20 Sep",asesor:"Kommo",sug:0,inv:545900,invWA:545900,msg:928,costo:588.25},
+
+  // 21-27 SEPTIEMBRE
+  {mes:"septiembre",label:"21–27 Sep",asesor:"Goodtrade 1a Mayo",sug:100000,inv:100000,invWA:97400,msg:98,costo:993.88},
+  {mes:"septiembre",label:"21–27 Sep",asesor:"Punto 80",sug:100000,inv:100000,invWA:263280,msg:258,costo:1020.47},
+  {mes:"septiembre",label:"21–27 Sep",asesor:"Goodtrade C. Jardín",sug:100000,inv:100000,invWA:104293,msg:91,costo:1146.08},
+  {mes:"septiembre",label:"21–27 Sep",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:100000,invWA:97140,msg:98,costo:991.22},
+  {mes:"septiembre",label:"21–27 Sep",asesor:"Sebastian",sug:100000,inv:100000,invWA:100000,msg:102,costo:980.39},
+  {mes:"septiembre",label:"21–27 Sep",asesor:"Juan Camilo",sug:100000,inv:100000,invWA:117070,msg:188,costo:622.71},
+  {mes:"septiembre",label:"21–27 Sep",asesor:"Andrea",sug:100000,inv:100000,invWA:28140,msg:108,costo:260.56},
+  {mes:"septiembre",label:"21–27 Sep",asesor:"Christian",sug:100000,inv:100000,invWA:100000,msg:75,costo:1333.33},
+  {mes:"septiembre",label:"21–27 Sep",asesor:"Fernando",sug:100000,inv:100000,invWA:78000,msg:72,costo:1083.33},
+  {mes:"septiembre",label:"21–27 Sep",asesor:"Kommo",sug:0,inv:550779,invWA:550779,msg:932,costo:590.96},
+
+  // 28 SEP - 4 OCT
+  {mes:"octubre",label:"28 Sep–4 Oct",asesor:"Goodtrade 1a Mayo",sug:100000,inv:100000,invWA:99057,msg:95,costo:1042.71},
+  {mes:"octubre",label:"28 Sep–4 Oct",asesor:"Punto 80",sug:100000,inv:100000,invWA:99904,msg:106,costo:942.49},
+  {mes:"octubre",label:"28 Sep–4 Oct",asesor:"Goodtrade C. Jardín",sug:100000,inv:100000,invWA:95707,msg:98,costo:976.60},
+  {mes:"octubre",label:"28 Sep–4 Oct",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:100000,invWA:99053,msg:95,costo:1042.66},
+  {mes:"octubre",label:"28 Sep–4 Oct",asesor:"Sebastian",sug:100000,inv:100000,invWA:100000,msg:123,costo:813.01},
+  {mes:"octubre",label:"28 Sep–4 Oct",asesor:"Juan Camilo",sug:100000,inv:100000,invWA:104408,msg:204,costo:511.80},
+  {mes:"octubre",label:"28 Sep–4 Oct",asesor:"Andrea",sug:100000,inv:100000,invWA:181693,msg:330,costo:550.58},
+  {mes:"octubre",label:"28 Sep–4 Oct",asesor:"Christian",sug:100000,inv:100000,invWA:99508,msg:138,costo:721.07},
+  {mes:"octubre",label:"28 Sep–4 Oct",asesor:"Fernando",sug:100000,inv:100000,invWA:75489,msg:51,costo:1480.18},
+  {mes:"octubre",label:"28 Sep–4 Oct",asesor:"Kommo",sug:0,inv:551121,invWA:551121,msg:976,costo:564.67},
+
+  // 5-11 OCTUBRE
+  {mes:"octubre",label:"5–11 Oct",asesor:"Goodtrade 1a Mayo",sug:100000,inv:100000,invWA:68741,msg:131,costo:524.74},
+  {mes:"octubre",label:"5–11 Oct",asesor:"Punto 80",sug:100000,inv:100000,invWA:99986,msg:186,costo:537.56},
+  {mes:"octubre",label:"5–11 Oct",asesor:"Goodtrade C. Jardín",sug:100000,inv:100000,invWA:100000,msg:128,costo:781.25},
+  {mes:"octubre",label:"5–11 Oct",asesor:"Goodtrade Sta. Lucía",sug:100000,inv:100000,invWA:99784,msg:89,costo:1121.17},
+  {mes:"octubre",label:"5–11 Oct",asesor:"Sebastian",sug:100000,inv:100000,invWA:100000,msg:140,costo:714.29},
+  {mes:"octubre",label:"5–11 Oct",asesor:"Juan Camilo",sug:100000,inv:100000,invWA:99580,msg:217,costo:458.89},
+  {mes:"octubre",label:"5–11 Oct",asesor:"Andrea",sug:100000,inv:100000,invWA:108602,msg:176,costo:617.06},
+  {mes:"octubre",label:"5–11 Oct",asesor:"Christian",sug:100000,inv:100000,invWA:97000,msg:150,costo:646.67},
+  {mes:"octubre",label:"5–11 Oct",asesor:"Fernando",sug:100000,inv:100000,invWA:67817,msg:51,costo:1329.75},
+  {mes:"octubre",label:"5–11 Oct",asesor:"Javier Sierra",sug:100000,inv:100000,invWA:99622,msg:76,costo:1310.82},
+  {mes:"octubre",label:"5–11 Oct",asesor:"Kommo",sug:0,inv:531855,invWA:531855,msg:1048,costo:507.50},
   // FERNANDO
   {mes:"junio",label:"29 Jun–4 Jul",asesor:"Fernando",sug:50000,inv:50000,invWA:50000,msg:84,costo:595.24},
   {mes:"julio",label:"5–12 Jul",asesor:"Fernando",sug:50000,inv:50000,invWA:50000,msg:123,costo:406.50},
@@ -472,7 +509,7 @@ const RAW = [
   {mes:"julio",label:"20–26 Jul",asesor:"Fernando",sug:58757,inv:58757,invWA:58757,msg:84,costo:699.49},
 ];
 
-const MESES=["marzo","abril","mayo","junio","julio","agosto","septiembre"];
+const MESES=["marzo","abril","mayo","junio","julio","agosto","septiembre","octubre"];
 const ASESORES=[...new Set(RAW.map(d=>d.asesor))];
 const SEMANAS=[...new Set(RAW.map(d=>d.label))];
 const COL_MES={marzo:'#003863',abril:'#D61016',mayo:'#0F7B6C',junio:'#7B3F91',julio:'#BA7517',agosto:'#1D5FAA',septiembre:'#C0392B'};
@@ -523,11 +560,8 @@ const sfSem=document.getElementById('sf_sem');
 SEMANAS.forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=s;sfSem.appendChild(o);});
 
 const mfMeses=document.getElementById('mf_meses');
-MESES.forEach(m=>{
-  const lbl=document.createElement('label');lbl.className='checked';
-  lbl.innerHTML=`<input type="checkbox" value="${m}" checked onchange="styleCheck(this);updateMes()"> ${cap(m)}`;
-  mfMeses.appendChild(lbl);
-});
+MESES.forEach(m=>{const o=document.createElement('option');o.value=m;o.textContent=cap(m);mfMeses.appendChild(o);});
+
 
 const csSems=document.getElementById('cs_sems');
 SEMANAS.forEach((s,i)=>{
@@ -537,11 +571,8 @@ SEMANAS.forEach((s,i)=>{
 });
 
 const cmMeses=document.getElementById('cm_meses');
-MESES.forEach(m=>{
-  const lbl=document.createElement('label');lbl.className='checked';
-  lbl.innerHTML=`<input type="checkbox" value="${m}" checked onchange="styleCheck(this);updateCompMes()"> ${cap(m)}`;
-  cmMeses.appendChild(lbl);
-});
+MESES.forEach(m=>{const o=document.createElement('option');o.value=m;o.textContent=cap(m);cmMeses.appendChild(o);});
+
 
 function styleCheck(cb){cb.parentElement.className=cb.checked?'checked':'';}
 function getChecked(gid){return [...document.querySelectorAll(`#${gid} input[type=checkbox]:checked`)].map(c=>c.value);}
@@ -586,7 +617,7 @@ function updateSemana(){
 }
 
 function updateMes(){
-  const meses=getChecked('mf_meses');const ase=document.getElementById('mf_ase').value;
+  const mesVal=document.getElementById('mf_meses').value;const meses=mesVal==='all'?MESES:[mesVal];const ase=document.getElementById('mf_ase').value;
   const data=RAW.filter(d=>meses.includes(d.mes)&&(ase==='all'||d.asesor===ase));
   const kpiEl=document.getElementById('m_kpis');kpiEl.innerHTML='';
   meses.forEach(m=>{const md=data.filter(d=>d.mes===m);const inv=md.reduce((s,d)=>s+d.inv,0);const msg=md.reduce((s,d)=>s+d.msg,0);kpiEl.innerHTML+=`<div class="kpi"><div class="kpi-label">${cap(m)}</div><div class="kpi-value">$${fmt(inv)}</div><div class="kpi-sub">${fmt(msg)} msgs · $${fmt(msg>0?inv/msg:0)}/msg</div></div>`;});
@@ -628,7 +659,7 @@ function updateCompSem(){
 }
 
 function updateCompMes(){
-  const meses=getChecked('cm_meses');
+  const cmVal=document.getElementById('cm_meses').value;const meses=cmVal==='all'?MESES:[cmVal];
   const mode=getCmMode();
   const asesores=mode==='compare'?getChecked('cm_ase_checks'):['all'];
   const colors=meses.map(m=>COL_MES[m]||'#888');
